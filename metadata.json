@@ -1,0 +1,7 @@
+{
+  "name": "Tarbiyah Digital - Aplikasi Islami Terpadu",
+  "description": "Platform edukasi Islam digital lengkap dengan Mushaf Al-Qur'an, Jadwal Sholat, Konsultasi AI, dan Sejarah Islam.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
