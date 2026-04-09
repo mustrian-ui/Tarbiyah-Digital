@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Sparkles, Trash2 } from "lucide-react";
 import { GoogleGenAI } from "@google/genai";
 import { motion, AnimatePresence } from "motion/react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { cn } from "../lib/utils";
 
 let aiInstance: any = null;
@@ -50,8 +52,8 @@ export default function AI() {
 
     try {
       const ai = getAI();
-      const model = ai.models.generateContent({
-        model: "gemini-3-flash-latest", // Use latest stable alias
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview", // Use correct model alias from skill
         contents: userMessage,
         config: {
           systemInstruction: `Anda adalah asisten AI konsultasi Islami yang bijaksana, ramah, dan berpengetahuan luas. 
@@ -64,11 +66,18 @@ export default function AI() {
           - nu.or.id
           
           Berikan jawaban yang menyejukkan, moderat, dan selalu sertakan dalil (Al-Qur'an atau Hadits) jika relevan. 
-          Gunakan bahasa Indonesia yang baik dan benar. Jika pertanyaan tidak relevan dengan Islam, ingatkan pengguna dengan sopan bahwa Anda adalah asisten khusus konsultasi Islami.`,
+          Gunakan bahasa Indonesia yang baik dan benar. 
+          
+          PENTING: Gunakan format Markdown untuk membuat jawaban Anda terstruktur dan mudah dibaca:
+          - Gunakan **tebal** untuk poin penting atau istilah kunci.
+          - Gunakan daftar (bullet points atau numbered lists) untuk langkah-langkah atau daftar informasi.
+          - Gunakan kutipan (blockquotes) untuk ayat Al-Qur'an atau Hadits.
+          - Gunakan judul (headings) jika jawaban cukup panjang.
+          
+          Jika pertanyaan tidak relevan dengan Islam, ingatkan pengguna dengan sopan bahwa Anda adalah asisten khusus konsultasi Islami.`,
         },
       });
 
-      const response = await model;
       const botText = response.text || "Maaf, saya tidak dapat memproses permintaan Anda saat ini.";
       setMessages(prev => [...prev, { role: "bot", text: botText }]);
     } catch (err: any) {
@@ -149,7 +158,15 @@ export default function AI() {
                   ? "bg-amber-500 text-white rounded-tr-none" 
                   : "bg-white text-gray-800 border border-emerald-100 rounded-tl-none"
               )}>
-                {msg.text}
+                {msg.role === "bot" ? (
+                  <div className="markdown-content prose prose-sm max-w-none prose-emerald">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {msg.text}
+                    </ReactMarkdown>
+                  </div>
+                ) : (
+                  msg.text
+                )}
               </div>
             </motion.div>
           ))}
