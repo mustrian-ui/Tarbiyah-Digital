@@ -2,27 +2,16 @@ import React, { useState } from "react";
 import { ScrollText, Search, ChevronRight, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
-
-const arbainData = [
-  {
-    number: 1,
-    title: "Niat dan Ikhlas",
-    arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوِ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ.",
-    translation: "Sesungguhnya setiap perbuatan tergantung niatnya. Dan sesungguhnya setiap orang (akan dibalas) berdasarkan apa yang dia niatkan. Siapa yang hijrahnya karena (ingin mendapatkan keridhaan) Allah dan Rasul-Nya, maka hijrahnya kepada (keridhaan) Allah dan Rasul-Nya. Dan siapa yang hijrahnya karena dunia yang dikehendakinya atau karena wanita yang ingin dinikahinya, maka hijrahnya (akan bernilai) sesuai dengan tujuan hijrahnya.",
-    explanation: "Hadits ini merupakan salah satu pilar Islam. Niat adalah pembeda antara ibadah dan kebiasaan, serta antara ibadah yang satu dengan yang lainnya."
-  },
-  {
-    number: 2,
-    title: "Islam, Iman, dan Ihsan",
-    arabic: "بَيْنَمَا نَحْنُ جُلُوْسٌ عِنْدَ رَسُوْلِ اللهِ صلى الله عليه وسلم ذَاتَ يَوْمٍ إِذْ طَلَعَ عَلَيْنَا رَجُلٌ شَدِيْدُ بَيَاضِ الثِّيَابِ شَدِيْدُ سَوَادِ الشَّعْرِ...",
-    translation: "Ketika kami sedang duduk bersama Rasulullah SAW pada suatu hari, tiba-tiba muncul seorang laki-laki yang berpakaian sangat putih dan rambutnya sangat hitam...",
-    explanation: "Hadits ini dikenal sebagai Hadits Jibril yang menjelaskan tentang rukun Islam, rukun Iman, dan Ihsan."
-  }
-  // ... more can be added
-];
+import { arbainData } from "../constants/arbain";
 
 export default function Hadits() {
   const [activeNum, setActiveNum] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredHadits = arbainData.filter(h => 
+    h.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    h.number.toString().includes(searchQuery)
+  );
 
   return (
     <div className="space-y-8">
@@ -34,8 +23,20 @@ export default function Hadits() {
         <ScrollText size={200} className="absolute top-0 right-0 -mr-12 -mt-12 opacity-20" />
       </div>
 
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+        <input
+          type="text"
+          placeholder="Cari nomor atau judul hadits..."
+          className="w-full pl-12 pr-4 py-4 bg-white rounded-2xl border border-emerald-50 shadow-sm focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       <div className="grid grid-cols-1 gap-4">
-        {arbainData.map((hadith) => (
+        {filteredHadits.map((hadith) => (
           <motion.div
             key={hadith.number}
             layout

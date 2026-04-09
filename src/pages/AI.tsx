@@ -4,7 +4,18 @@ import { GoogleGenAI } from "@google/genai";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: any = null;
+
+const getAI = () => {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === "undefined" || apiKey === "") {
+      throw new Error("API Key tidak ditemukan");
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
 
 export default function AI() {
   const [messages, setMessages] = useState<{ role: "user" | "bot"; text: string }[]>([]);
@@ -21,14 +32,26 @@ export default function AI() {
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === "undefined" || apiKey === "") {
+      setMessages(prev => [...prev, { role: "user", text: input.trim() }]);
+      setMessages(prev => [...prev, { 
+        role: "bot", 
+        text: "⚠️ API Key tidak ditemukan. Pastikan Anda telah menambahkan GEMINI_API_KEY ke Environment Variables di Vercel." 
+      }]);
+      setInput("");
+      return;
+    }
+
     const userMessage = input.trim();
     setInput("");
     setMessages(prev => [...prev, { role: "user", text: userMessage }]);
     setLoading(true);
 
     try {
+      const ai = getAI();
       const model = ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-3-flash-latest", // Use latest stable alias
         contents: userMessage,
         config: {
           systemInstruction: `Anda adalah asisten AI konsultasi Islami yang bijaksana, ramah, dan berpengetahuan luas. 
@@ -48,9 +71,17 @@ export default function AI() {
       const response = await model;
       const botText = response.text || "Maaf, saya tidak dapat memproses permintaan Anda saat ini.";
       setMessages(prev => [...prev, { role: "bot", text: botText }]);
-    } catch (err) {
+    } catch (err: any) {
       console.error("AI Error:", err);
-      setMessages(prev => [...prev, { role: "bot", text: "Terjadi kesalahan saat menghubungi asisten AI. Silakan coba lagi nanti." }]);
+      let errorMessage = "Terjadi kesalahan saat menghubungi asisten AI. Silakan coba lagi nanti.";
+      
+      if (err?.message?.includes("API key not found") || err?.message?.includes("invalid API key")) {
+        errorMessage = "⚠️ API Key tidak valid atau tidak ditemukan. Periksa konfigurasi GEMINI_API_KEY Anda.";
+      } else if (err?.message) {
+        errorMessage = `Terjadi kesalahan: ${err.message}`;
+      }
+      
+      setMessages(prev => [...prev, { role: "bot", text: errorMessage }]);
     } finally {
       setLoading(false);
     }
