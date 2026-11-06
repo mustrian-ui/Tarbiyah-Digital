@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
+import { OfflineIndicator } from "./components/OfflineIndicator";
+import { PWAInstallPromptModal } from "./components/PWAInstallPromptModal";
 
 // Lazy load pages for better performance
 const Home = lazy(() => import("./pages/Home"));
@@ -56,6 +58,8 @@ export default function App() {
             <p>© 2026 Tarbiyah Digital. Dibuat Oleh : R14N</p>
           </footer>
         </main>
+        <OfflineIndicator />
+        <PWAInstallPromptModal />
       </div>
     </Router>
   );

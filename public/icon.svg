@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="50%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#065f46" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background rounded rectangle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="220" fill="url(#glowGrad)" />
+
+  <!-- Outer Decorative Ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="8 6" opacity="0.6" />
+
+  <!-- Crescent Moon -->
+  <path d="M 270 120 
+           A 136 136 0 1 0 380 340 
+           A 168 168 0 1 1 270 120 Z" 
+        fill="url(#goldGrad)" />
+
+  <!-- Islamic 8-Pointed Star (Rub el Hizb) inside Crescent -->
+  <g transform="translate(325, 215) scale(0.68)">
+    <rect x="-42" y="-42" width="84" height="84" rx="4" fill="url(#goldGrad)" />
+    <rect x="-42" y="-42" width="84" height="84" rx="4" fill="url(#goldGrad)" transform="rotate(45)" />
+    <circle cx="0" cy="0" r="14" fill="#065f46" />
+    <circle cx="0" cy="0" r="8" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Open Quran / Book Motif at bottom center -->
+  <g transform="translate(256, 375)">
+    <!-- Book Left Page -->
+    <path d="M -8 -8 C -45 -22 -95 -22 -130 -8 C -135 -6 -138 -2 -138 5 L -138 52 C -138 58 -132 63 -126 60 C -92 46 -48 46 -8 60 Z" fill="#ecfdf5" />
+    <!-- Book Right Page -->
+    <path d="M 8 -8 C 45 -22 95 -22 130 -8 C 135 -6 138 -2 138 5 L 138 52 C 138 58 132 63 126 60 C 92 46 48 46 8 60 Z" fill="#ecfdf5" />
+    <!-- Book Spine & Ribbon -->
+    <path d="M -10 -6 Q 0 8 10 -6 L 8 60 Q 0 52 -8 60 Z" fill="url(#goldGrad)" />
+    <!-- Golden bookmark tassel -->
+    <path d="M 0 52 L 0 85 M -4 80 L 4 80" stroke="url(#goldGrad)" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>

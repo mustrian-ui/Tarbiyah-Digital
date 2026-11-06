@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Clock, MapPin, Quote, BookOpen, Star } from "lucide-react";
+import React from "react";
+import { Clock, Quote, BookOpen, Star } from "lucide-react";
 import { motion } from "motion/react";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
+import { PWAInstallBanner } from "../components/PWAInstallBanner";
+import { PrayerTimesCard } from "../components/PrayerTimesCard";
 
 export default function Home() {
-  const [prayerTimes, setPrayerTimes] = useState<any>(null);
-  const [location, setLocation] = useState({ city: "Jakarta", country: "Indonesia" });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchPrayerTimes = async () => {
-      try {
-        const res = await axios.get(
-          `https://api.aladhan.com/v1/timingsByCity?city=${location.city}&country=${location.country}&method=2`
-        );
-        setPrayerTimes(res.data.data.timings);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching prayer times", err);
-        setLoading(false);
-      }
-    };
-
-    fetchPrayerTimes();
-  }, [location]);
 
   const dailyQuote = {
     ayah: "Maka sesungguhnya bersama kesulitan ada kemudahan.",
@@ -59,41 +40,12 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Prayer Times */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100"
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-emerald-800 flex items-center gap-2">
-              <Clock className="text-amber-500" /> Jadwal Sholat
-            </h3>
-            <div className="flex items-center gap-1 text-sm text-gray-500">
-              <MapPin size={14} />
-              <span>{location.city}</span>
-            </div>
-          </div>
+      {/* PWA Install Banner */}
+      <PWAInstallBanner />
 
-          {loading ? (
-            <div className="space-y-4 animate-pulse">
-              {[1, 2, 3, 4, 5].map(i => <div key={i} className="h-10 bg-gray-100 rounded-lg"></div>)}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-3">
-              {prayerTimes && Object.entries(prayerTimes)
-                .filter(([key]) => ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].includes(key))
-                .map(([name, time]: any) => (
-                  <div key={name} className="flex justify-between items-center p-3 rounded-xl bg-emerald-50/50 hover:bg-emerald-50 transition-colors">
-                    <span className="font-medium text-emerald-900">{name === "Fajr" ? "Subuh" : name === "Dhuhr" ? "Dzuhur" : name === "Asr" ? "Ashar" : name}</span>
-                    <span className="font-bold text-emerald-700">{time}</span>
-                  </div>
-                ))}
-            </div>
-          )}
-        </motion.div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Prayer Times with Indonesian City Selection and GPS */}
+        <PrayerTimesCard />
 
         {/* Daily Quote & Hadith */}
         <div className="space-y-6">

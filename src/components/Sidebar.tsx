@@ -6,6 +6,7 @@ import {
   TrendingUp, Calculator, CheckSquare, Menu, X 
 } from "lucide-react";
 import { cn } from "../lib/utils";
+import { PWAInstallButton } from "./PWAInstallButton";
 
 const menuItems = [
   { name: "Beranda", icon: Home, path: "/" },
@@ -38,7 +39,7 @@ export const Sidebar = () => {
           </h1>
           <p className="text-xs text-emerald-200 mt-1">Platform Edukasi Islami</p>
         </div>
-        <nav className="flex-1 px-4 pb-6">
+        <nav className="flex-1 px-4 pb-4">
           <ul className="space-y-1">
             {menuItems.map((item) => (
               <li key={item.path}>
@@ -58,6 +59,11 @@ export const Sidebar = () => {
             ))}
           </ul>
         </nav>
+
+        {/* PWA Install Button in Desktop Sidebar */}
+        <div className="p-4 border-t border-emerald-700/60 bg-emerald-900/40">
+          <PWAInstallButton variant="sidebar" />
+        </div>
       </aside>
 
       {/* Mobile Header */}
@@ -65,14 +71,17 @@ export const Sidebar = () => {
         <h1 className="text-xl font-bold text-amber-400 flex items-center gap-2">
           <Star size={20} className="fill-amber-400" /> Tarbiyah Digital
         </h1>
-        <button onClick={() => setIsOpen(!isOpen)} className="p-2">
-          {isOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-2">
+          <PWAInstallButton variant="compact" />
+          <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-emerald-100 hover:text-white" aria-label="Toggle Menu">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="lg:hidden fixed inset-0 bg-emerald-900/95 z-40 pt-20 px-6 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 bg-emerald-900/95 z-40 pt-20 px-6 pb-8 overflow-y-auto flex flex-col justify-between">
           <ul className="space-y-2">
             {menuItems.map((item) => (
               <li key={item.path}>
@@ -80,18 +89,21 @@ export const Sidebar = () => {
                   to={item.path}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "flex items-center gap-4 px-4 py-4 rounded-xl text-lg",
+                    "flex items-center gap-4 px-4 py-3.5 rounded-xl text-base",
                     location.pathname === item.path
                       ? "bg-emerald-700 text-amber-400 font-bold"
                       : "text-emerald-100"
                   )}
                 >
-                  <item.icon size={24} />
+                  <item.icon size={22} />
                   <span>{item.name}</span>
                 </Link>
               </li>
             ))}
           </ul>
+          <div className="mt-6 pt-4 border-t border-emerald-700/60">
+            <PWAInstallButton variant="sidebar" />
+          </div>
         </div>
       )}
     </>
