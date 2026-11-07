@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
+import { BottomNav } from "./components/BottomNav";
 import { OfflineIndicator } from "./components/OfflineIndicator";
 import { PWAInstallPromptModal } from "./components/PWAInstallPromptModal";
 
@@ -31,7 +32,7 @@ export default function App() {
     <Router>
       <div className="flex min-h-screen bg-slate-50">
         <Sidebar />
-        <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 flex flex-col">
+        <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 pb-20 lg:pb-0 flex flex-col">
           <div className="flex-1">
             <Suspense fallback={<Loading />}>
               <div className="max-w-5xl mx-auto p-4 md:p-8">
@@ -58,6 +59,7 @@ export default function App() {
             <p>© 2026 Tarbiyah Digital. Dibuat Oleh : R14N</p>
           </footer>
         </main>
+        <BottomNav />
         <OfflineIndicator />
         <PWAInstallPromptModal />
       </div>

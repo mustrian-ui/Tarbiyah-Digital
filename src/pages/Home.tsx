@@ -25,17 +25,34 @@ export default function Home() {
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-emerald-800 p-8 text-white shadow-2xl"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 p-6 md:p-8 text-white shadow-2xl border border-emerald-700/40"
       >
-        <div className="relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">Assalamu'alaikum</h2>
-          <p className="text-emerald-100 text-lg">Selamat datang di Tarbiyah Digital teman ibadah harianmu.</p>
-          <div className="mt-6 flex items-center gap-2 text-amber-400 font-medium">
-            <Clock size={20} />
-            <span>{format(new Date(), "EEEE, d MMMM yyyy", { locale: id })}</span>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3.5 mb-3.5">
+              <img 
+                src="/logo.png" 
+                alt="Logo Tarbiyah Digital" 
+                className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover ring-2 ring-amber-400/90 shadow-lg bg-emerald-950 shrink-0" 
+              />
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full inline-block">
+                  Pendidikan Islam Era Digital
+                </span>
+                <h1 className="text-xl md:text-2xl font-bold text-white mt-0.5">Tarbiyah Digital</h1>
+              </div>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-1.5 text-amber-300">Assalamu'alaikum Warahmatullah</h2>
+            <p className="text-emerald-100 text-sm md:text-base max-w-xl leading-relaxed">
+              Platform edukasi Islami terpadu untuk mendampingi ibadah dan pembelajaran harian Anda.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-amber-300 text-sm font-medium">
+              <Clock size={18} />
+              <span>{format(new Date(), "EEEE, d MMMM yyyy", { locale: id })}</span>
+            </div>
           </div>
         </div>
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 opacity-10">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 opacity-10 pointer-events-none">
           <Star size={300} className="fill-white" />
         </div>
       </motion.section>
