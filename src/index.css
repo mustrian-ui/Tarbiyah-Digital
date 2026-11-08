@@ -59,3 +59,66 @@ body {
 .markdown-content code {
   @apply bg-emerald-50 text-emerald-700 px-1 rounded font-mono text-xs;
 }
+
+/* Khutbah Reader Custom Formatting */
+.khutbah-content h2 {
+  @apply text-xl md:text-2xl font-bold text-emerald-950 mt-8 mb-4 pb-2 border-b-2 border-emerald-100 flex items-center gap-2;
+}
+
+.khutbah-content h3 {
+  @apply text-lg md:text-xl font-bold text-emerald-900 mt-6 mb-3;
+}
+
+.khutbah-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.khutbah-content p[dir="rtl"],
+.khutbah-content .has-text-align-right {
+  font-family: var(--font-arabic), "Amiri", serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.2;
+  @apply my-6 p-4 rounded-2xl bg-emerald-50/70 border-r-4 border-emerald-600 text-emerald-950;
+}
+
+.khutbah-content em {
+  @apply text-gray-600 not-italic font-medium;
+}
+
+.khutbah-content blockquote {
+  @apply border-l-4 border-amber-400 bg-amber-50/60 p-4 rounded-r-xl italic my-4 text-gray-700;
+}
+
+@media print {
+  aside, nav, header, footer, .no-print {
+    display: none !important;
+  }
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .khutbah-print-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+.fikih-internal-link {
+  color: #047857;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #6ee7b7;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.fikih-internal-link:hover {
+  color: #064e3b;
+  text-decoration-color: #059669;
+  background-color: #ecfdf5;
+  border-radius: 4px;
+}
+

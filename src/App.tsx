@@ -20,6 +20,8 @@ const Pedoman = lazy(() => import("./pages/Pedoman"));
 const Roadmap = lazy(() => import("./pages/Roadmap"));
 const Zakat = lazy(() => import("./pages/Zakat"));
 const Tracker = lazy(() => import("./pages/Tracker"));
+const Khutbah = lazy(() => import("./pages/Khutbah"));
+const Fikih = lazy(() => import("./pages/Fikih"));
 
 const Loading = () => (
   <div className="flex items-center justify-center h-screen bg-white">
@@ -51,6 +53,8 @@ export default function App() {
                   <Route path="/roadmap" element={<Roadmap />} />
                   <Route path="/zakat" element={<Zakat />} />
                   <Route path="/tracker" element={<Tracker />} />
+                  <Route path="/khutbah" element={<Khutbah />} />
+                  <Route path="/fikih" element={<Fikih />} />
                 </Routes>
               </div>
             </Suspense>

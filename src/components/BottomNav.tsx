@@ -4,7 +4,7 @@ import {
   Home, BookOpen, Bookmark, Grid, Heart, History, 
   ScrollText, Calculator, X, ChevronRight, Sparkles, 
   Trash2, MessageSquare, BookCheck, Shield, CheckSquare, 
-  Clock, Microscope, TrendingUp, Star
+  Clock, Microscope, TrendingUp, Star, Scroll, Scale
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
@@ -61,8 +61,8 @@ export const BottomNav: React.FC = () => {
       color: "bg-rose-50 text-rose-600 border-rose-100",
     },
     {
-      title: "Sejarah Islam",
-      desc: "Kisah kenabian & peradaban Islam",
+      title: "Sejarah",
+      desc: "Artikel sejarah dakwah.id & peradaban Islam",
       path: "/sejarah",
       icon: History,
       color: "bg-amber-50 text-amber-700 border-amber-100",
@@ -84,6 +84,8 @@ export const BottomNav: React.FC = () => {
   ];
 
   const secondaryMenuItems = [
+    { title: "Khutbah Jum'at", path: "/khutbah", icon: Scroll },
+    { title: "Fikih", path: "/fikih", icon: Scale },
     { title: "Konsultasi AI", path: "/ai", icon: MessageSquare },
     { title: "Pedoman Ibadah", path: "/pedoman", icon: BookCheck },
     { title: "Peristiwa Agung", path: "/peristiwa", icon: Star },
