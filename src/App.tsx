@@ -32,12 +32,12 @@ const Loading = () => (
 export default function App() {
   return (
     <Router>
-      <div className="flex min-h-screen bg-slate-50">
+      <div className="flex min-h-screen bg-slate-50 w-full max-w-full overflow-x-hidden">
         <Sidebar />
-        <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 pb-20 lg:pb-0 flex flex-col">
-          <div className="flex-1">
+        <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 pb-32 lg:pb-8 flex flex-col w-full max-w-full min-w-0 overflow-x-hidden">
+          <div className="flex-1 w-full max-w-full min-w-0">
             <Suspense fallback={<Loading />}>
-              <div className="max-w-5xl mx-auto p-4 md:p-8">
+              <div className="max-w-5xl mx-auto px-3.5 sm:px-6 md:px-8 py-4 md:py-8 w-full max-w-full min-w-0">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/quran" element={<Quran />} />

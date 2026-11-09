@@ -252,9 +252,9 @@ export default function Fikih() {
   }, [articles, selectedCategory, showOnlyBookmarks, bookmarkedIds]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full min-w-0 overflow-x-hidden">
       {/* 1. Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-6 md:p-8 shadow-xl relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-4 sm:p-6 md:p-8 shadow-xl relative overflow-hidden w-full max-w-full min-w-0">
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold mb-3">
             <Scale size={14} />
@@ -270,7 +270,7 @@ export default function Fikih() {
             thaharah, puasa, qurban, hingga hukum keluarga berdasarkan Al-Qur'an dan Sunnah.
           </p>
 
-          <div className="mt-4 flex items-center gap-2 text-xs text-emerald-200">
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-emerald-200">
             <span className="bg-emerald-900/60 px-3 py-1.5 rounded-xl border border-emerald-700/50">
               Materi Edukasi Dakwah Fikih
             </span>
@@ -289,9 +289,9 @@ export default function Fikih() {
 
       {/* 2. Reader Mode (if an article is selected) */}
       {activeArticle ? (
-        <div ref={readerTopRef} className="space-y-4">
+        <div ref={readerTopRef} className="space-y-4 w-full max-w-full min-w-0">
           {/* Reader Top Controls */}
-          <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-3 shadow-md flex flex-wrap items-center justify-between gap-3 no-print">
+          <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-2.5 sm:p-3 shadow-md flex items-center justify-between gap-2 no-print w-full max-w-full min-w-0">
             <button
               onClick={handleBackToList}
               className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-xl transition"
@@ -373,15 +373,15 @@ export default function Fikih() {
           )}
 
           {/* Article Container */}
-          <article className="bg-white rounded-3xl border border-emerald-100 shadow-lg p-6 md:p-10 khutbah-print-card">
-            <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto">
+          <article className="bg-white rounded-3xl border border-emerald-100 shadow-lg p-4 sm:p-6 md:p-10 khutbah-print-card w-full max-w-full min-w-0 overflow-hidden break-words">
+            <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto w-full min-w-0">
               <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 <Scale size={14} />
                 <span>Hukum & Fatwa Fikih</span>
               </div>
 
               <h1 className={cn(
-                "font-extrabold text-emerald-950 leading-tight",
+                "font-extrabold text-emerald-950 leading-tight break-words min-w-0",
                 fontSize === "normal" ? "text-xl md:text-3xl" : "text-2xl md:text-4xl"
               )}>
                 {activeArticle.title}
@@ -396,7 +396,7 @@ export default function Fikih() {
 
             {/* Featured Image */}
             {activeArticle.featuredImage && (
-              <div className="max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden shadow-sm no-print">
+              <div className="max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden shadow-sm no-print w-full min-w-0">
                 <img
                   src={activeArticle.featuredImage}
                   alt={activeArticle.title}
@@ -527,18 +527,18 @@ export default function Fikih() {
         </div>
       ) : (
         /* 3. List of Fikih Articles */
-        <div className="space-y-6">
+        <div className="space-y-6 w-full max-w-full min-w-0">
           {/* Search & Filter Bar */}
-          <div className="bg-white rounded-2xl border border-emerald-100 p-4 shadow-sm space-y-3">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              <div className="relative flex-1">
+          <div className="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-sm space-y-3 w-full max-w-full min-w-0 overflow-hidden">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full min-w-0">
+              <div className="relative flex-1 min-w-0">
                 <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Cari hukum fikih (misal: paylater, qurban, istinja, shalat, warisan, puasa)..."
+                  placeholder="Cari hukum fikih (paylater, qurban, istinja, shalat, puasa)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm"
+                  className="w-full pl-10 pr-14 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-xs sm:text-sm min-w-0"
                 />
                 {searchQuery && (
                   <button
@@ -565,7 +565,7 @@ export default function Fikih() {
             </div>
 
             {/* Category Filter Chips */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 scrollbar-none">
+            <div className="w-full max-w-full min-w-0 flex items-center gap-1.5 overflow-x-auto pb-2 pt-1 scrollbar-none touch-pan-x">
               <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
                 <Filter size={13} />
                 <span>Kategori:</span>
@@ -575,7 +575,7 @@ export default function Fikih() {
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
-                    "px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition",
+                    "px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition shrink-0",
                     selectedCategory === cat
                       ? "bg-emerald-800 text-amber-300 font-bold shadow-xs"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -602,9 +602,9 @@ export default function Fikih() {
 
           {/* Cards Grid */}
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 w-full max-w-full min-w-0">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl p-5 border border-emerald-100 animate-pulse space-y-3">
+                <div key={i} className="bg-white rounded-2xl p-4 sm:p-5 border border-emerald-100 animate-pulse space-y-3 w-full min-w-0">
                   <div className="h-4 bg-gray-200 rounded w-1/3"></div>
                   <div className="h-6 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-full"></div>
@@ -613,16 +613,16 @@ export default function Fikih() {
               ))}
             </div>
           ) : filteredArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 w-full max-w-full min-w-0">
               {filteredArticles.map((article) => {
                 const isBookmarked = bookmarkedIds.includes(article.id);
                 return (
                   <div
                     key={article.id}
                     onClick={() => handleOpenArticle(article)}
-                    className="bg-white rounded-2xl border border-emerald-100 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300"
+                    className="bg-white rounded-2xl border border-emerald-100 p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300 w-full max-w-full min-w-0 overflow-hidden break-words"
                   >
-                    <div>
+                    <div className="w-full min-w-0">
                       {article.featuredImage && (
                         <div className="w-full h-36 rounded-xl overflow-hidden mb-3 bg-emerald-50">
                           <img
@@ -652,12 +652,12 @@ export default function Fikih() {
                         </button>
                       </div>
 
-                      <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors">
+                      <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors break-words min-w-0">
                         {article.title}
                       </h3>
 
                       {article.excerpt && (
-                        <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed">
+                        <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed break-words min-w-0">
                           {article.excerpt}
                         </p>
                       )}

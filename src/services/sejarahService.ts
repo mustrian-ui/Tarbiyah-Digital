@@ -20,22 +20,20 @@ export function cleanHtmlEntities(raw: string): string {
 
 export function cleanSejarahContentHtml(html: string): string {
   if (!html) return "";
+
+  // Cut bottom widget wrappers, sharedaddy, and download buttons
   const cutMarkers = [
     '<div class="wp-block-jetpack-related-posts"',
+    'class="sharedaddy',
+    'id="jp-relatedposts"',
     'Download PDF',
-    'Anda ingin mendapat kiriman update',
-    'class="sharedaddy'
+    'Anda ingin mendapat kiriman update'
   ];
   let minIndex = html.length;
   for (const marker of cutMarkers) {
     const idx = html.indexOf(marker);
     if (idx !== -1 && idx < minIndex) {
-      const prevBlock = html.lastIndexOf('<div', idx);
-      const prevP = html.lastIndexOf('<p', idx);
-      const chosen = prevBlock !== -1 && prevBlock > (idx - 300)
-        ? prevBlock
-        : (prevP !== -1 && prevP > (idx - 150) ? prevP : idx);
-      minIndex = Math.min(minIndex, chosen);
+      minIndex = idx;
     }
   }
   let trimmed = html.slice(0, minIndex);
@@ -43,20 +41,32 @@ export function cleanSejarahContentHtml(html: string): string {
   // 1. Remove widget lists of recent/latest posts
   trimmed = trimmed.replace(/<ul[^>]*class="[^"]*wp-block-latest-posts[^"]*"[\s\S]*?<\/ul>/gi, "");
 
-  // 2. Remove headings containing cross promotions (Artikel Sejarah, Materi Khutbah, etc.)
-  trimmed = trimmed.replace(/<h[2-6][^>]*>[\s\S]*?(?:Materi\s+Khutbah|Artikel\s+Sejarah|Baca juga|Artikel terkait|Selain)[\s\S]*?<\/h[2-6]>/gi, "");
+  // 2. Remove bottom headings for promotional widgets (must NOT span across multiple tags!)
+  trimmed = trimmed.replace(/<h[2-6]\b[^>]*>(?:(?!<\/h[2-6]>)[\s\S])*?(?:Artikel\s+terkait|Baca\s+juga|Materi\s+Khutbah|Artikel\s+Sejarah|Artikel\s+Fikih)(?:(?!<\/h[2-6]>)[\s\S])*?<\/h[2-6]>/gi, "");
 
-  // 3. Remove paragraphs containing cross promotions
-  trimmed = trimmed.replace(/<p[^>]*>[\s\S]*?(?:Materi\s+Khutbah|Artikel\s+Sejarah|Baca juga|Baca artikel terkait|Artikel terkait)[\s\S]*?<\/p>/gi, "");
+  // 3. Remove bottom paragraphs that are pure cross-promo announcements
+  trimmed = trimmed.replace(/<p\b[^>]*>(?:(?!<\/p>|<p\b)[\s\S])*?(?:Baca\s+artikel\s+terkait|Baca\s+juga:|Artikel\s+Sejarah\s+terbaru:|Artikel\s+terkait:)(?:(?!<\/p>|<p\b)[\s\S])*?<\/p>/gi, "");
 
-  // 4. Remove list items containing cross promotions
-  trimmed = trimmed.replace(/<li[^>]*>[\s\S]*?(?:Materi\s+Khutbah|Artikel\s+Sejarah)[\s\S]*?<\/li>/gi, "");
+  // 4. Handle links: convert internal dakwah.id post links to internal /sejarah?slug= links
+  // And strip external links to plain text
+  trimmed = trimmed.replace(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi, (_match, attrs, text) => {
+    const hrefMatch = attrs.match(/href=["']([^"']+)["']/i);
+    if (!hrefMatch) return text;
+    const href = hrefMatch[1];
+    
+    // Check if it's a dakwah.id post link
+    const dakwahMatch = href.match(/https?:\/\/(?:www\.)?dakwah\.id\/([a-zA-Z0-9\-_]+)\/?(?:$|[?#])/i);
+    if (dakwahMatch) {
+      const slug = dakwahMatch[1];
+      if (!/^(category|tag|author|page|tentang|redaksi|pedoman|kebijakan|kontak|donasi|hubungi)$/i.test(slug)) {
+        return `<a href="/sejarah?slug=${slug}" data-slug="${slug}" class="sejarah-internal-link inline-flex items-center font-bold text-amber-800 hover:text-amber-950 underline underline-offset-4 decoration-amber-400 hover:decoration-amber-700 transition cursor-pointer">${text}</a>`;
+      }
+    }
+    // Any other external link: return text only (no link to outside)
+    return text;
+  });
 
-  // 5. Remove all <a> hyperlinks to prevent external links while keeping text
-  trimmed = trimmed.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, "$1");
-  trimmed = trimmed.replace(/<\/?a\b[^>]*>/gi, "");
-
-  // 6. Clean empty paragraphs and lists
+  // 5. Clean empty paragraphs
   trimmed = trimmed.replace(/<p[^>]*>\s*<\/p>/gi, "");
   trimmed = trimmed.replace(/<ul[^>]*>\s*<\/ul>/gi, "");
 
@@ -214,3 +224,69 @@ export async function fetchSejarahArticles(
 export function getCachedSejarahBySlug(slug: string): SejarahArticleItem | undefined {
   return cachedSejarah.find(s => s.slug === slug);
 }
+
+export async function fetchSejarahArticleBySlug(slug: string): Promise<SejarahArticleItem | null> {
+  const local = getCachedSejarahBySlug(slug);
+  if (local && local.contentHtml && local.contentHtml.length > 200) {
+    return local;
+  }
+
+  try {
+    const url = new URL("https://www.dakwah.id/wp-json/wp/v2/posts");
+    url.searchParams.set("slug", slug);
+    url.searchParams.set("_embed", "true");
+
+    const res = await fetch(url.toString(), {
+      headers: { Accept: "application/json" }
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error ${res.status}`);
+    }
+
+    const posts = await res.json();
+    if (!posts || posts.length === 0) {
+      return local || null;
+    }
+
+    const p = posts[0];
+    const featuredMedia = p._embedded && p._embedded["wp:featuredmedia"] && p._embedded["wp:featuredmedia"][0]
+      ? p._embedded["wp:featuredmedia"][0].source_url
+      : null;
+    const content = cleanSejarahContentHtml(p.content?.rendered || "");
+    const excerpt = p.excerpt?.rendered
+      ? cleanHtmlEntities(p.excerpt.rendered.replace(/<[^>]+>/g, " ").trim())
+      : "";
+
+    const articleItem: SejarahArticleItem = {
+      id: p.id,
+      slug: p.slug,
+      title: cleanHtmlEntities(p.title?.rendered || "Artikel Sejarah"),
+      date: p.date,
+      link: "",
+      featuredImage: featuredMedia,
+      excerpt,
+      contentHtml: content
+    };
+
+    // Update memory & localStorage cache
+    const existingIndex = cachedSejarah.findIndex(s => s.slug === slug);
+    if (existingIndex !== -1) {
+      cachedSejarah[existingIndex] = articleItem;
+    } else {
+      cachedSejarah.unshift(articleItem);
+    }
+
+    try {
+      localStorage.setItem(STORAGE_KEY_SEJARAH_POSTS, JSON.stringify(cachedSejarah.slice(0, 60)));
+    } catch {
+      // ignore
+    }
+
+    return articleItem;
+  } catch (err) {
+    console.warn("Failed to fetch sejarah article by slug:", slug, err);
+    return local || null;
+  }
+}
+

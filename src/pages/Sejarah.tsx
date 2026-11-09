@@ -4,7 +4,7 @@ import {
   History, BookOpen, Landmark, Map, ChevronRight, X, 
   Search, Bookmark, Copy, Printer, Share2, ArrowLeft, 
   CheckCircle2, RefreshCw, ScrollText, Sparkles, Filter, 
-  Clock, Shield, Star
+  Clock, Shield, Star, Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
@@ -13,7 +13,8 @@ import {
   getCachedSejarahBySlug, 
   getSejarahBookmarkedIds, 
   toggleSejarahBookmark,
-  cleanSejarahContentHtml 
+  cleanSejarahContentHtml,
+  fetchSejarahArticleBySlug
 } from "../services/sejarahService";
 import { SejarahArticleItem, SejarahSubmenu } from "../types/sejarah";
 
@@ -157,6 +158,7 @@ export default function Sejarah() {
 
   // Reader state for dakwah.id articles
   const [activeArticle, setActiveArticle] = useState<SejarahArticleItem | null>(null);
+  const [loadingArticle, setLoadingArticle] = useState<boolean>(false);
   const [fontSize, setFontSize] = useState<"normal" | "large">("normal");
   const [copyToast, setCopyToast] = useState<boolean>(false);
 
@@ -180,46 +182,56 @@ export default function Sejarah() {
     loadArticles(1, searchQuery);
   }, [searchQuery]);
 
-  // Handle URL slug parameter
+  // Handle URL slug parameter & internal navigation
   useEffect(() => {
     if (selectedSlug) {
-      const found = articles.find(a => a.slug === selectedSlug);
-      if (found) {
-        setActiveArticle(found);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        const cached = getCachedSejarahBySlug(selectedSlug);
-        if (cached) {
-          setActiveArticle(cached);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        } else {
-          fetch(`https://www.dakwah.id/wp-json/wp/v2/posts?slug=${selectedSlug}&_embed=true`)
-            .then(res => res.json())
-            .then(data => {
-              if (Array.isArray(data) && data[0]) {
-                const p = data[0];
-                const content = cleanSejarahContentHtml(p.content?.rendered || "");
-                const item: SejarahArticleItem = {
-                  id: p.id,
-                  slug: p.slug,
-                  title: p.title?.rendered?.replace(/&#8217;/g, "'")?.replace(/&amp;/g, "&") || "Artikel Sejarah",
-                  date: p.date,
-                  link: "",
-                  featuredImage: p._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null,
-                  excerpt: p.excerpt?.rendered?.replace(/<[^>]+>/g, " ").trim() || "",
-                  contentHtml: content
-                };
-                setActiveArticle(item);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-            })
-            .catch(err => console.error(err));
-        }
-      }
+      handleNavigateSlug(selectedSlug, false);
     } else {
       setActiveArticle(null);
     }
-  }, [selectedSlug, articles]);
+  }, [selectedSlug]);
+
+  const handleNavigateSlug = async (slug: string, updateUrl: boolean = true) => {
+    if (updateUrl) {
+      setSearchParams({ tab: "artikel", slug });
+    }
+
+    // 1. Check in already loaded articles
+    const found = articles.find(a => a.slug === slug);
+    if (found && found.contentHtml && found.contentHtml.length > 200) {
+      setActiveArticle(found);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    // 2. Check in cached dataset
+    const cached = getCachedSejarahBySlug(slug);
+    if (cached && cached.contentHtml && cached.contentHtml.length > 200) {
+      setActiveArticle(cached);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    // 3. Fetch from API with loading indicator
+    setLoadingArticle(true);
+    try {
+      const fetched = await fetchSejarahArticleBySlug(slug);
+      if (fetched) {
+        setActiveArticle(fetched);
+        setArticles(prev => {
+          if (!prev.some(a => a.slug === slug)) {
+            return [fetched, ...prev];
+          }
+          return prev.map(a => a.slug === slug ? fetched : a);
+        });
+      }
+    } catch (err) {
+      console.error("Error fetching sejarah article by slug:", slug, err);
+    } finally {
+      setLoadingArticle(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const loadArticles = async (page: number, query: string = "") => {
     if (page === 1) setLoadingArticles(true);
@@ -254,15 +266,33 @@ export default function Sejarah() {
   };
 
   const handleOpenArticle = (item: SejarahArticleItem) => {
-    setActiveArticle(item);
     setSearchParams({ tab: "artikel", slug: item.slug });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!item.contentHtml || item.contentHtml.length < 200) {
+      handleNavigateSlug(item.slug, false);
+    } else {
+      setActiveArticle(item);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleBackToArticles = () => {
     setActiveArticle(null);
     setSearchParams({ tab: "artikel" });
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = (e.target as HTMLElement).closest("a");
+    if (!target) return;
+    const slug = target.getAttribute("data-slug") || 
+      (target.getAttribute("href")?.includes("slug=") 
+        ? new URL(target.href, window.location.origin).searchParams.get("slug") 
+        : null);
+
+    if (slug) {
+      e.preventDefault();
+      handleNavigateSlug(slug, true);
+    }
   };
 
   const handleToggleBookmark = (id: number, e?: React.MouseEvent) => {
@@ -313,9 +343,9 @@ export default function Sejarah() {
   const activePeradabanSection = peradabanSections.find(s => s.id === showFullPeradaban);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full min-w-0 overflow-x-hidden">
       {/* 1. Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-6 md:p-8 shadow-xl relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-4 sm:p-6 md:p-8 shadow-xl relative overflow-hidden w-full max-w-full min-w-0">
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold mb-3">
             <History size={14} />
@@ -332,11 +362,11 @@ export default function Sejarah() {
           </p>
 
           {/* Submenu Navigation Tabs */}
-          <div className="mt-5 flex flex-wrap gap-2.5">
+          <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row gap-2 sm:gap-2.5 w-full max-w-full min-w-0">
             <button
               onClick={() => handleSwitchTab("artikel")}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs md:text-sm font-bold transition shadow-sm",
+                "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs md:text-sm font-bold transition shadow-sm w-full sm:w-auto",
                 currentTab === "artikel"
                   ? "bg-amber-400 text-emerald-950 shadow-md scale-102"
                   : "bg-emerald-900/60 hover:bg-emerald-800 text-emerald-100 hover:text-white border border-emerald-700/60"
@@ -357,7 +387,7 @@ export default function Sejarah() {
             <button
               onClick={() => handleSwitchTab("peradaban")}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs md:text-sm font-bold transition shadow-sm",
+                "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs md:text-sm font-bold transition shadow-sm w-full sm:w-auto",
                 currentTab === "peradaban"
                   ? "bg-amber-400 text-emerald-950 shadow-md scale-102"
                   : "bg-emerald-900/60 hover:bg-emerald-800 text-emerald-100 hover:text-white border border-emerald-700/60"
@@ -376,12 +406,13 @@ export default function Sejarah() {
 
       {/* 2. SUBMENU 1: Artikel Sejarah dari dakwah.id */}
       {currentTab === "artikel" && (
-        <div className="space-y-6">
+        <div className="space-y-6 w-full max-w-full min-w-0">
           {/* Reader View Mode (if an article is selected) */}
           {activeArticle ? (
-            <div ref={readerTopRef} className="space-y-4">
+            <div ref={readerTopRef} className="space-y-4 w-full max-w-full min-w-0">
               {/* Reader Control Bar */}
-              <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-3 shadow-md flex flex-wrap items-center justify-between gap-3 no-print">
+              <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-2.5 sm:p-3 shadow-md flex items-center justify-between gap-2 no-print w-full max-w-full min-w-0">
+
                 <button
                   onClick={handleBackToArticles}
                   className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-xl transition"
@@ -463,15 +494,15 @@ export default function Sejarah() {
               )}
 
               {/* Article Content Container */}
-              <article className="bg-white rounded-3xl border border-emerald-100 shadow-lg p-6 md:p-10 khutbah-print-card">
-                <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto">
+              <article className="bg-white rounded-3xl border border-emerald-100 shadow-lg p-4 sm:p-6 md:p-10 khutbah-print-card w-full max-w-full min-w-0 overflow-hidden break-words">
+                <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto w-full min-w-0">
                   <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-3">
                     <History size={14} />
                     <span>Artikel Sejarah Islam</span>
                   </div>
 
                   <h1 className={cn(
-                    "font-extrabold text-emerald-950 leading-tight",
+                    "font-extrabold text-emerald-950 leading-tight break-words min-w-0",
                     fontSize === "normal" ? "text-xl md:text-3xl" : "text-2xl md:text-4xl"
                   )}>
                     {activeArticle.title}
@@ -484,8 +515,16 @@ export default function Sejarah() {
                   </div>
                 </header>
 
+                {/* Loading state if fetching article */}
+                {loadingArticle && (
+                  <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center flex items-center justify-center gap-3 animate-pulse no-print">
+                    <Loader2 size={18} className="animate-spin text-emerald-700" />
+                    <span className="text-xs font-semibold text-emerald-900">Memuat materi sejarah lengkap...</span>
+                  </div>
+                )}
+
                 {activeArticle.featuredImage && (
-                  <div className="max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden shadow-sm no-print">
+                  <div className="max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden shadow-sm no-print w-full min-w-0">
                     <img
                       src={activeArticle.featuredImage}
                       alt={activeArticle.title}
@@ -496,8 +535,9 @@ export default function Sejarah() {
                 )}
 
                 <div 
+                  onClick={handleContentClick}
                   className={cn(
-                    "khutbah-content prose max-w-none text-slate-800",
+                    "khutbah-content prose max-w-none text-slate-800 break-words w-full max-w-full min-w-0 overflow-hidden",
                     fontSize === "normal" ? "text-base" : "text-lg md:text-xl font-medium leading-relaxed"
                   )}
                   dangerouslySetInnerHTML={{ __html: activeArticle.contentHtml }}
@@ -513,17 +553,17 @@ export default function Sejarah() {
             </div>
           ) : (
             /* Articles Grid List */
-            <div className="space-y-6">
+            <div className="space-y-6 w-full max-w-full min-w-0">
               {/* Search & Filter Bar */}
-              <div className="bg-white rounded-2xl border border-emerald-100 p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div className="relative flex-1">
+              <div className="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full max-w-full min-w-0 overflow-hidden">
+                <div className="relative flex-1 min-w-0">
                   <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Cari peristiwa, tokoh, atau artikel sejarah (misal: Abu Bakar, Madinah, Tabuk)..."
+                    placeholder="Cari peristiwa atau tokoh sejarah (Abu Bakar, Madinah, Tabuk)..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm"
+                    className="w-full pl-10 pr-14 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-xs sm:text-sm min-w-0"
                   />
                   {searchQuery && (
                     <button
@@ -575,16 +615,16 @@ export default function Sejarah() {
                   ))}
                 </div>
               ) : filteredArticles.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 w-full max-w-full min-w-0">
                   {filteredArticles.map((article) => {
                     const isBookmarked = bookmarkedIds.includes(article.id);
                     return (
                       <div
                         key={article.id}
                         onClick={() => handleOpenArticle(article)}
-                        className="bg-white rounded-2xl border border-emerald-100 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300"
+                        className="bg-white rounded-2xl border border-emerald-100 p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300 w-full max-w-full min-w-0 overflow-hidden break-words"
                       >
-                        <div>
+                        <div className="w-full min-w-0">
                           {article.featuredImage && (
                             <div className="w-full h-36 rounded-xl overflow-hidden mb-3 bg-emerald-50">
                               <img
@@ -614,12 +654,12 @@ export default function Sejarah() {
                             </button>
                           </div>
 
-                          <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors">
+                          <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors break-words min-w-0">
                             {article.title}
                           </h3>
 
                           {article.excerpt && (
-                            <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed">
+                            <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed break-words min-w-0">
                               {article.excerpt}
                             </p>
                           )}
