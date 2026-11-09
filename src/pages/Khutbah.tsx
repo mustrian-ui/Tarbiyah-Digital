@@ -214,36 +214,36 @@ export default function Khutbah() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full min-w-0 overflow-x-hidden">
       {/* 1. Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-6 md:p-8 shadow-xl relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white p-4 sm:p-6 md:p-8 shadow-xl relative overflow-hidden w-full max-w-full min-w-0">
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold mb-3">
-            <ScrollText size={14} />
-            <span>Naskah Khutbah Pilihan Resmi Dakwah.id</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold mb-3 max-w-full">
+            <ScrollText size={14} className="shrink-0" />
+            <span className="truncate">Naskah Khutbah Pilihan Resmi Dakwah.id</span>
           </div>
 
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight break-words">
             Materi Khutbah Jum'at
           </h1>
 
-          <p className="text-emerald-100/90 text-sm md:text-base mt-2 leading-relaxed">
+          <p className="text-emerald-100/90 text-xs sm:text-sm md:text-base mt-2 leading-relaxed break-words">
             Kumpulan naskah khutbah Jum'at tematik lengkap dengan teks Arab berharakat, 
             terjemahan, dalil Al-Qur'an & Hadits, serta mode pembaca mimbar yang nyaman bagi para Khatib & Da'i.
           </p>
 
           {/* Quick Rukun Khutbah Guide toggle */}
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 w-full min-w-0">
             <button
               onClick={() => setShowRukunGuide(!showRukunGuide)}
-              className="inline-flex items-center gap-2 bg-emerald-700/70 hover:bg-emerald-700 text-amber-300 text-xs font-semibold px-3.5 py-2 rounded-xl transition border border-emerald-600/40"
+              className="inline-flex items-center justify-center gap-2 bg-emerald-700/70 hover:bg-emerald-700 text-amber-300 text-xs font-semibold px-3.5 py-2 rounded-xl transition border border-emerald-600/40 shrink-0"
             >
-              <BookCheck size={16} />
+              <BookCheck size={16} className="shrink-0" />
               <span>{showRukunGuide ? "Tutup Panduan Rukun Khutbah" : "Lihat 5 Rukun Khutbah Jum'at"}</span>
             </button>
 
-            <div className="inline-flex items-center gap-1.5 text-xs text-emerald-200 px-3 py-2 rounded-xl bg-emerald-900/50 border border-emerald-700/40">
-              <ScrollText size={13} className="text-amber-300" />
+            <div className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-emerald-200 px-3 py-2 rounded-xl bg-emerald-900/50 border border-emerald-700/40">
+              <ScrollText size={13} className="text-amber-300 shrink-0" />
               <span>Koleksi Naskah Khutbah Lengkap</span>
             </div>
           </div>
@@ -257,36 +257,36 @@ export default function Khutbah() {
 
       {/* Rukun Khutbah Accordion Guide */}
       {showRukunGuide && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm text-amber-950 transition-all">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 shadow-sm text-amber-950 transition-all w-full max-w-full min-w-0 overflow-hidden">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-xl bg-amber-400 text-emerald-950 shrink-0 mt-0.5">
               <BookCheck size={20} />
             </div>
-            <div className="flex-1">
-              <h3 className="font-bold text-base text-amber-950">5 Rukun Khutbah Jum'at (Mazhab Syafi'i)</h3>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-amber-950">5 Rukun Khutbah Jum'at (Mazhab Syafi'i)</h3>
               <p className="text-xs text-amber-800 mt-0.5 mb-3">
                 Khatib wajib memenuhi kelima rukun ini agar khutbah sah menurut syariat:
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs w-full min-w-0">
+                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 min-w-0 break-words">
                   <span className="font-bold text-emerald-800 bg-emerald-100 rounded-full w-5 h-5 flex items-center justify-center shrink-0">1</span>
-                  <span><strong>Memuji Allah (Tahmid)</strong> pada khutbah pertama dan kedua (misal: <em>Alhamdulillah</em>).</span>
+                  <span className="min-w-0"><strong>Memuji Allah (Tahmid)</strong> pada khutbah pertama dan kedua (misal: <em>Alhamdulillah</em>).</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2">
+                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 min-w-0 break-words">
                   <span className="font-bold text-emerald-800 bg-emerald-100 rounded-full w-5 h-5 flex items-center justify-center shrink-0">2</span>
-                  <span><strong>Membaca Shalawat Nabi SAW</strong> pada khutbah pertama dan kedua.</span>
+                  <span className="min-w-0"><strong>Membaca Shalawat Nabi SAW</strong> pada khutbah pertama dan kedua.</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2">
+                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 min-w-0 break-words">
                   <span className="font-bold text-emerald-800 bg-emerald-100 rounded-full w-5 h-5 flex items-center justify-center shrink-0">3</span>
-                  <span><strong>Berwasiat Taqwa (Ittaqullah)</strong> pada kedua khutbah.</span>
+                  <span className="min-w-0"><strong>Berwasiat Taqwa (Ittaqullah)</strong> pada kedua khutbah.</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2">
+                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 min-w-0 break-words">
                   <span className="font-bold text-emerald-800 bg-emerald-100 rounded-full w-5 h-5 flex items-center justify-center shrink-0">4</span>
-                  <span><strong>Membaca minimal satu ayat Al-Qur'an</strong> yang dapat dipahami maknanya di salah satu khutbah.</span>
+                  <span className="min-w-0"><strong>Membaca minimal satu ayat Al-Qur'an</strong> yang dapat dipahami maknanya di salah satu khutbah.</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 md:col-span-2">
+                <div className="p-2.5 rounded-xl bg-white border border-amber-200/70 flex items-start gap-2 md:col-span-2 min-w-0 break-words">
                   <span className="font-bold text-emerald-800 bg-emerald-100 rounded-full w-5 h-5 flex items-center justify-center shrink-0">5</span>
-                  <span><strong>Mendoakan kaum mukminin dan mukminat</strong> pada khutbah kedua (memohon ampunan & keselamatan).</span>
+                  <span className="min-w-0"><strong>Mendoakan kaum mukminin dan mukminat</strong> pada khutbah kedua (memohon ampunan & keselamatan).</span>
                 </div>
               </div>
             </div>
@@ -296,121 +296,122 @@ export default function Khutbah() {
 
       {/* 2. Reader View Mode (if an article is actively selected) */}
       {activePost ? (
-        <div ref={readerTopRef} className="space-y-4">
+        <div ref={readerTopRef} className="space-y-4 w-full max-w-full min-w-0 overflow-x-hidden">
           {/* Top Control Bar */}
-          <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-3 shadow-md flex flex-wrap items-center justify-between gap-3 no-print">
+          <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-2.5 sm:p-3 shadow-md flex flex-wrap items-center justify-between gap-2 no-print w-full max-w-full min-w-0">
             <button
               onClick={handleBackToList}
-              className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-xl transition"
+              className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-xl transition shrink-0"
             >
               <ArrowLeft size={16} />
               <span>Daftar Khutbah</span>
             </button>
 
-            {/* Font Size & Mode Mimbar */}
-            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl text-xs">
-              <span className="text-gray-500 px-2 font-medium hidden sm:inline">Ukuran Teks:</span>
-              <button
-                onClick={() => setFontSize("normal")}
-                className={cn(
-                  "px-2.5 py-1 rounded-lg font-bold transition",
-                  fontSize === "normal" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
-                )}
-                title="Ukuran Normal"
-              >
-                A
-              </button>
-              <button
-                onClick={() => setFontSize("large")}
-                className={cn(
-                  "px-2.5 py-1 rounded-lg font-bold transition",
-                  fontSize === "large" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
-                )}
-                title="Ukuran Besar"
-              >
-                A+
-              </button>
-              <button
-                onClick={() => setFontSize("mimbar")}
-                className={cn(
-                  "px-3 py-1 rounded-lg font-extrabold transition flex items-center gap-1",
-                  fontSize === "mimbar" ? "bg-emerald-700 text-amber-300 shadow-xs" : "text-gray-600 hover:text-gray-900"
-                )}
-                title="Mode Mimbar Khusus Khatib"
-              >
-                <span>Mimbar</span>
-              </button>
-            </div>
+            {/* Font Size & Mode Mimbar + Actions */}
+            <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+              <div className="flex items-center gap-0.5 sm:gap-1 bg-gray-100 p-1 rounded-xl text-xs">
+                <button
+                  onClick={() => setFontSize("normal")}
+                  className={cn(
+                    "px-2 sm:px-2.5 py-1 rounded-lg font-bold transition",
+                    fontSize === "normal" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+                  )}
+                  title="Ukuran Normal"
+                >
+                  A
+                </button>
+                <button
+                  onClick={() => setFontSize("large")}
+                  className={cn(
+                    "px-2 sm:px-2.5 py-1 rounded-lg font-bold transition",
+                    fontSize === "large" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+                  )}
+                  title="Ukuran Besar"
+                >
+                  A+
+                </button>
+                <button
+                  onClick={() => setFontSize("mimbar")}
+                  className={cn(
+                    "px-2.5 sm:px-3 py-1 rounded-lg font-extrabold transition flex items-center gap-1",
+                    fontSize === "mimbar" ? "bg-emerald-700 text-amber-300 shadow-xs" : "text-gray-600 hover:text-gray-900"
+                  )}
+                  title="Mode Mimbar Khusus Khatib"
+                >
+                  <span>Mimbar</span>
+                </button>
+              </div>
 
-            {/* Actions: Bookmark, Copy, Print, Share */}
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={() => handleToggleBookmark(activePost.id)}
-                className={cn(
-                  "p-2 rounded-xl transition border",
-                  bookmarkedIds.includes(activePost.id)
-                    ? "bg-amber-50 text-amber-600 border-amber-300"
-                    : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
-                )}
-                title="Simpan ke Favorit"
-              >
-                <Bookmark size={18} className={bookmarkedIds.includes(activePost.id) ? "fill-amber-500" : ""} />
-              </button>
+              {/* Actions: Bookmark, Copy, Print, Share */}
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => handleToggleBookmark(activePost.id)}
+                  className={cn(
+                    "p-2 rounded-xl transition border",
+                    bookmarkedIds.includes(activePost.id)
+                      ? "bg-amber-50 text-amber-600 border-amber-300"
+                      : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                  )}
+                  title="Simpan ke Favorit"
+                >
+                  <Bookmark size={17} className={bookmarkedIds.includes(activePost.id) ? "fill-amber-500" : ""} />
+                </button>
 
-              <button
-                onClick={handleCopyText}
-                className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
-                title="Salin Teks Khutbah"
-              >
-                <Copy size={18} />
-              </button>
+                <button
+                  onClick={handleCopyText}
+                  className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
+                  title="Salin Teks Khutbah"
+                >
+                  <Copy size={17} />
+                </button>
 
-              <button
-                onClick={handlePrint}
-                className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
-                title="Cetak Khutbah"
-              >
-                <Printer size={18} />
-              </button>
+                <button
+                  onClick={handlePrint}
+                  className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
+                  title="Cetak Khutbah"
+                >
+                  <Printer size={17} />
+                </button>
 
-              <button
-                onClick={handleShare}
-                className="p-2 rounded-xl bg-emerald-700 text-white hover:bg-emerald-800 transition shadow-xs"
-                title="Bagikan"
-              >
-                <Share2 size={18} />
-              </button>
+                <button
+                  onClick={handleShare}
+                  className="p-2 rounded-xl bg-emerald-700 text-white hover:bg-emerald-800 transition shadow-xs"
+                  title="Bagikan"
+                >
+                  <Share2 size={17} />
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Toast Notification for Copy/Share */}
           {copyToast && (
-            <div className="fixed bottom-24 right-6 z-50 bg-emerald-950 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-semibold animate-bounce">
-              <CheckCircle2 size={16} className="text-amber-400" />
+            <div className="fixed bottom-24 right-4 sm:right-6 z-50 bg-emerald-950 text-white px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-semibold animate-bounce max-w-[calc(100vw-2rem)]">
+              <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
               <span>Naskah berhasil disalin ke clipboard!</span>
             </div>
           )}
 
           {/* Main Article Container */}
           <article className={cn(
-            "bg-white rounded-3xl border border-emerald-100 shadow-lg p-6 md:p-10 khutbah-print-card",
+            "bg-white rounded-3xl border border-emerald-100 shadow-lg p-4 sm:p-6 md:p-10 khutbah-print-card w-full max-w-full min-w-0 overflow-hidden break-words",
             fontSize === "mimbar" ? "bg-amber-50/20" : ""
           )}>
             {/* Post Header */}
-            <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto">
+            <header className="border-b border-emerald-100 pb-5 mb-6 text-center max-w-2xl mx-auto w-full min-w-0">
               <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 <ScrollText size={14} />
                 <span>Naskah Khutbah Jum'at</span>
               </div>
 
               <h1 className={cn(
-                "font-extrabold text-emerald-950 leading-tight",
+                "font-extrabold text-emerald-950 leading-tight break-words min-w-0",
                 fontSize === "normal" ? "text-xl md:text-2xl" : fontSize === "large" ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
               )}>
                 {activePost.title}
               </h1>
 
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs text-gray-500">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-gray-500">
                 <span className="font-semibold text-emerald-800 bg-emerald-100/60 px-2.5 py-1 rounded-lg">
                   {activePost.pemateri}
                 </span>
@@ -423,7 +424,7 @@ export default function Khutbah() {
 
             {/* Featured Image if available */}
             {activePost.featuredImage && (
-              <div className="max-w-xl mx-auto mb-8 rounded-2xl overflow-hidden shadow-sm no-print">
+              <div className="max-w-xl mx-auto mb-6 rounded-2xl overflow-hidden shadow-sm no-print w-full min-w-0">
                 <img
                   src={activePost.featuredImage}
                   alt={activePost.title}
@@ -436,19 +437,19 @@ export default function Khutbah() {
             {/* Content Body */}
             <div 
               className={cn(
-                "khutbah-content prose max-w-none text-slate-800",
+                "khutbah-content prose max-w-none text-slate-800 break-words",
                 fontSize === "normal" ? "text-base" : fontSize === "large" ? "text-lg md:text-xl" : "text-xl md:text-2xl font-medium leading-loose"
               )}
               dangerouslySetInnerHTML={{ __html: activePost.contentHtml }}
             />
 
             {/* Attribution and Footer */}
-            <footer className="mt-12 pt-6 border-t border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+            <footer className="mt-10 pt-5 border-t border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500 w-full min-w-0">
               <div className="flex items-center gap-2">
                 <Info size={16} className="text-emerald-700 shrink-0" />
                 <span>Materi resmi disadur dari <strong>dakwah.id</strong> untuk kepentingan dakwah & ibadah umat Islam.</span>
               </div>
-              <span className="text-emerald-700 font-medium bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+              <span className="text-emerald-700 font-medium bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 shrink-0">
                 Tarbiyah Digital
               </span>
             </footer>
@@ -456,19 +457,19 @@ export default function Khutbah() {
         </div>
       ) : (
         /* 3. List of Khutbah Cards */
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 w-full max-w-full min-w-0">
           {/* Filter Bar & Search */}
-          <div className="bg-white rounded-2xl border border-emerald-100 p-4 shadow-sm space-y-3">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-sm space-y-3 w-full max-w-full min-w-0 overflow-hidden">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full min-w-0">
               {/* Search input */}
-              <div className="relative flex-1">
+              <div className="relative flex-1 min-w-0 w-full">
                 <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Cari tema khutbah (misal: Palestina, rezeki, taqwa, keluarga, zalim)..."
+                  placeholder="Cari tema khutbah (Palestina, rezeki, taqwa, keluarga)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm"
+                  className="w-full pl-10 pr-14 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-xs sm:text-sm min-w-0"
                 />
                 {searchQuery && (
                   <button
@@ -496,7 +497,7 @@ export default function Khutbah() {
             </div>
 
             {/* Topic Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 scrollbar-none">
+            <div className="w-full max-w-full min-w-0 flex items-center gap-1.5 overflow-x-auto pb-2 pt-1 scrollbar-none touch-pan-x">
               <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
                 <Filter size={13} />
                 <span>Topik:</span>
@@ -506,7 +507,7 @@ export default function Khutbah() {
                   key={t}
                   onClick={() => setSelectedTopic(t)}
                   className={cn(
-                    "px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition",
+                    "px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition shrink-0",
                     selectedTopic === t
                       ? "bg-emerald-800 text-amber-300 font-bold shadow-xs"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -519,13 +520,13 @@ export default function Khutbah() {
           </div>
 
           {/* Total Results indicator */}
-          <div className="flex items-center justify-between text-xs text-gray-500 px-1">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-gray-500 px-1 w-full min-w-0">
             <span>
               Menampilkan <strong>{filteredPosts.length}</strong> naskah khutbah
               {totalCount > 0 ? ` (dari total ~${totalCount} koleksi dakwah.id)` : ""}
             </span>
             {searchQuery && (
-              <span className="text-emerald-700 font-medium">
+              <span className="text-emerald-700 font-medium truncate">
                 Pencarian untuk: "{searchQuery}"
               </span>
             )}
@@ -533,9 +534,9 @@ export default function Khutbah() {
 
           {/* Cards Grid */}
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 w-full max-w-full min-w-0">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl p-5 border border-emerald-100 animate-pulse space-y-3">
+                <div key={i} className="bg-white rounded-2xl p-4 sm:p-5 border border-emerald-100 animate-pulse space-y-3 w-full min-w-0">
                   <div className="h-4 bg-gray-200 rounded w-1/3"></div>
                   <div className="h-6 bg-gray-200 rounded w-3/4"></div>
                   <div className="h-3 bg-gray-200 rounded w-full"></div>
@@ -545,26 +546,26 @@ export default function Khutbah() {
               ))}
             </div>
           ) : filteredPosts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 w-full max-w-full min-w-0">
               {filteredPosts.map((post) => {
                 const isBookmarked = bookmarkedIds.includes(post.id);
                 return (
                   <div
                     key={post.id}
                     onClick={() => handleOpenPost(post)}
-                    className="bg-white rounded-2xl border border-emerald-100 p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300"
+                    className="bg-white rounded-2xl border border-emerald-100 p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer hover:border-emerald-300 w-full max-w-full min-w-0 overflow-hidden break-words"
                   >
-                    <div>
+                    <div className="w-full min-w-0">
                       {/* Top metadata */}
                       <div className="flex items-start justify-between gap-2 mb-2.5">
-                        <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100 truncate max-w-[200px]">
+                        <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100 truncate max-w-[160px] sm:max-w-[220px]">
                           {post.pemateri}
                         </span>
 
                         <button
                           onClick={(e) => handleToggleBookmark(post.id, e)}
                           className={cn(
-                            "p-1.5 rounded-lg transition",
+                            "p-1.5 rounded-lg transition shrink-0",
                             isBookmarked
                               ? "text-amber-500 bg-amber-50"
                               : "text-gray-300 hover:text-amber-400"
@@ -576,18 +577,18 @@ export default function Khutbah() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors">
+                      <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug line-clamp-2 transition-colors break-words min-w-0">
                         {post.title}
                       </h3>
 
                       {/* Excerpt */}
-                      <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed">
+                      <p className="text-xs text-gray-600 mt-2 line-clamp-3 leading-relaxed break-words min-w-0">
                         {post.excerpt}
                       </p>
                     </div>
 
                     {/* Bottom CTA & Date */}
-                    <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                    <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 w-full min-w-0">
                       <span>
                         {new Date(post.date).toLocaleDateString("id-ID", {
                           day: "numeric",
@@ -596,7 +597,7 @@ export default function Khutbah() {
                         })}
                       </span>
 
-                      <div className="flex items-center gap-1 font-bold text-emerald-700 group-hover:text-emerald-900 group-hover:translate-x-0.5 transition-all">
+                      <div className="flex items-center gap-1 font-bold text-emerald-700 group-hover:text-emerald-900 group-hover:translate-x-0.5 transition-all shrink-0">
                         <span>Baca Naskah</span>
                         <ChevronRight size={15} />
                       </div>
@@ -606,12 +607,12 @@ export default function Khutbah() {
               })}
             </div>
           ) : (
-            <div className="bg-white rounded-3xl border border-emerald-100 p-12 text-center shadow-xs">
+            <div className="bg-white rounded-3xl border border-emerald-100 p-8 sm:p-12 text-center shadow-xs w-full max-w-full min-w-0">
               <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4">
                 <ScrollText size={32} />
               </div>
-              <h3 className="font-bold text-lg text-gray-900">Naskah Khutbah Tidak Ditemukan</h3>
-              <p className="text-sm text-gray-500 max-w-md mx-auto mt-1">
+              <h3 className="font-bold text-base sm:text-lg text-gray-900">Naskah Khutbah Tidak Ditemukan</h3>
+              <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mt-1">
                 {showOnlyBookmarked 
                   ? "Anda belum menyimpan naskah khutbah ke daftar favorit. Ketuk ikon penanda/bookmark pada naskah untuk menyimpannya." 
                   : "Coba gunakan kata kunci pencarian lain atau pilih topik khutbah yang berbeda."}
@@ -634,21 +635,22 @@ export default function Khutbah() {
 
           {/* Pagination / Load More button */}
           {!loading && currentPage < totalPages && !showOnlyBookmarked && (
-            <div className="text-center pt-4">
+            <div className="text-center pt-4 w-full min-w-0">
               <button
                 onClick={() => loadPosts(currentPage + 1, searchQuery)}
                 disabled={loadingMore}
-                className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs md:text-sm px-6 py-3 rounded-2xl shadow-sm transition disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs md:text-sm px-4 sm:px-6 py-3 rounded-2xl shadow-sm transition disabled:opacity-50 max-w-full"
               >
                 {loadingMore ? (
                   <>
-                    <RefreshCw size={16} className="animate-spin" />
-                    <span>Memuat Naskah dari Dakwah.id...</span>
+                    <RefreshCw size={16} className="animate-spin shrink-0" />
+                    <span>Memuat Naskah...</span>
                   </>
                 ) : (
                   <>
-                    <RefreshCw size={16} />
-                    <span>Muat Naskah Khutbah Berikutnya (Halaman {currentPage + 1} dari {totalPages})</span>
+                    <RefreshCw size={16} className="shrink-0" />
+                    <span className="hidden sm:inline">Muat Naskah Khutbah Berikutnya (Halaman {currentPage + 1} dari {totalPages})</span>
+                    <span className="sm:hidden">Muat Khutbah Berikutnya ({currentPage + 1}/{totalPages})</span>
                   </>
                 )}
               </button>
