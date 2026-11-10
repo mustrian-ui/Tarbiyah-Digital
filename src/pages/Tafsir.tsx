@@ -128,7 +128,7 @@ export default function Tafsir() {
   };
 
   const handleCopy = () => {
-    const formatted = `Tafsir As-Sa'di (QS. ${currentSurahMeta.namaLatin} [${selectedSurahNum}]: ${selectedAyahNum})\n\nAyat:\n${tafsirData.quranText}\n\nTerjemahan:\n${tafsirData.translation}\n\nPenjelasan Tafsir:\n${tafsirData.tafsirBlocks.join("\n\n")}\n\nSumber: QUL Tarteel AI (Resource 503) — https://qul.tarteel.ai/resources/translation/503/docs?ayah=${selectedSurahNum}%3A${selectedAyahNum}`;
+    const formatted = `Tafsir As-Sa'di (QS. ${currentSurahMeta.namaLatin} [${selectedSurahNum}]: ${selectedAyahNum})\n\nAyat:\n${tafsirData.quranText}\n\nTerjemahan:\n${tafsirData.translation}\n\nPenjelasan Tafsir:\n${tafsirData.tafsirBlocks.join("\n\n")}\n\nTarbiyah Digital`;
     navigator.clipboard.writeText(formatted);
     setCopyToast(true);
     setTimeout(() => setCopyToast(false), 2500);
@@ -171,7 +171,7 @@ export default function Tafsir() {
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold mb-3 max-w-full">
             <BookOpen size={14} className="shrink-0" />
-            <span className="truncate">Rujukan Resmi QUL Tarteel AI (Resource 503)</span>
+            <span className="truncate">Tafsir As-Sa'di — Bahasa Indonesia</span>
           </div>
 
           <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight break-words">
@@ -184,16 +184,10 @@ export default function Tafsir() {
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-            <a
-              href={`https://qul.tarteel.ai/resources/translation/503/docs?ayah=${selectedSurahNum}%3A${selectedAyahNum}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 text-emerald-950 font-bold hover:bg-amber-300 transition shadow-xs"
-              title="Buka rujukan sumber langsung di QUL Tarteel AI"
-            >
-              <ExternalLink size={13} />
-              <span>Sumber: qul.tarteel.ai ({selectedSurahNum}:{selectedAyahNum})</span>
-            </a>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30 font-semibold">
+              <BookOpen size={13} />
+              <span>QS. {currentSurahMeta.namaLatin} Ayat {selectedAyahNum}</span>
+            </span>
 
             <button
               onClick={() => setShowBookmarksModal(true)}
@@ -580,24 +574,18 @@ export default function Tafsir() {
           </button>
         </div>
 
-        {/* Source Footer */}
+        {/* Article Footer */}
         <footer className="mt-8 pt-5 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500 w-full min-w-0">
           <div className="flex items-center gap-2">
             <Info size={16} className="text-emerald-700 shrink-0" />
             <span>
-              Data tafsir bersumber dari <strong>Quranic Universal Library (QUL Tarteel AI — Resource 503)</strong>.
+              Kitab <strong>Taisir al-Karim ar-Rahman fi Tafsir Kalam al-Mannan</strong> — Syaikh Abdurrahman bin Nashir as-Sa'di.
             </span>
           </div>
 
-          <a
-            href={tafsirData.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-emerald-700 hover:text-emerald-900 font-semibold inline-flex items-center gap-1 hover:underline"
-          >
-            <span>Buka di qul.tarteel.ai</span>
-            <ExternalLink size={12} />
-          </a>
+          <span className="text-emerald-800 font-semibold bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+            Tarbiyah Digital
+          </span>
         </footer>
       </article>
 

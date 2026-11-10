@@ -186,12 +186,12 @@ export default function Home() {
               </div>
 
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider mb-2">
-                <span>Rujukan QUL Tarteel AI (503)</span>
+                <span>Kitab Tafsir Bahasa Indonesia</span>
               </div>
 
               <h3 className="text-xl font-bold text-white">Tafsir As-Sa'di Lengkap</h3>
               <p className="text-emerald-100 text-xs md:text-sm mt-1 leading-relaxed">
-                Kaji kalamullah dengan kitab tafsir Syaikh As-Sa'di (Bahasa Indonesia). Dilengkapi rujukan resmi untuk seluruh surah dan ayat.
+                Kaji kalamullah dengan kitab tafsir Syaikh As-Sa'di (Bahasa Indonesia) untuk seluruh surah dan ayat Al-Qur'an.
               </p>
             </div>
 

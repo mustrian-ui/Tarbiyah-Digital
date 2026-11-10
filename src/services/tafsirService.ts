@@ -285,9 +285,9 @@ export async function fetchTafsir(surah: number, ayah: number): Promise<TafsirDa
       quranText: "",
       translation: `Tafsir As-Sa'di (Indonesian) untuk Surah ${surahMeta.namaLatin} ayat ${ayah}.`,
       tafsirBlocks: [
-        `Penjelasan tafsir sedang dimuat dari sumber resmi Quranic Universal Library (QUL Tarteel AI). Jika terjadi kendala jaringan, Anda juga dapat membuka rujukan langsung melalui tombol sumber di bawah ini.`
+        `Penjelasan tafsir sedang dimuat. Silakan periksa koneksi internet Anda atau muat ulang halaman ini.`
       ],
-      tafsirHtml: `<p>Penjelasan tafsir untuk QS. ${surahMeta.namaLatin} ayat ${ayah} dapat diakses secara lengkap melalui sumber resmi QUL Tarteel AI Resource 503.</p>`,
+      tafsirHtml: `<p>Penjelasan tafsir untuk QS. ${surahMeta.namaLatin} ayat ${ayah} sedang dimuat.</p>`,
       prevAyah: ayah > 1 ? `${surah}:${ayah - 1}` : null,
       nextAyah: ayah < surahMeta.jumlahAyat ? `${surah}:${ayah + 1}` : null,
       sourceUrl: directUrl
