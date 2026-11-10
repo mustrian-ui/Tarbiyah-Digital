@@ -172,6 +172,46 @@ export default function Home() {
               <Scroll size={160} />
             </div>
           </motion.div>
+
+          {/* 3. Kartu Sorotan Tafsir As-Sa'di (QUL Tarteel Resource 503) */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="rounded-3xl bg-gradient-to-br from-teal-900 via-emerald-900 to-slate-900 p-6 text-white shadow-lg relative overflow-hidden flex flex-col justify-between border border-teal-700/50 group"
+          >
+            <div className="relative z-10">
+              <div className="w-10 h-10 rounded-2xl bg-amber-400 text-emerald-950 flex items-center justify-center mb-3.5 shadow-sm">
+                <BookOpen size={20} />
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider mb-2">
+                <span>Rujukan QUL Tarteel AI (503)</span>
+              </div>
+
+              <h3 className="text-xl font-bold text-white">Tafsir As-Sa'di Lengkap</h3>
+              <p className="text-emerald-100 text-xs md:text-sm mt-1 leading-relaxed">
+                Kaji kalamullah dengan kitab tafsir Syaikh As-Sa'di (Bahasa Indonesia). Dilengkapi rujukan resmi untuk seluruh surah dan ayat.
+              </p>
+            </div>
+
+            <div className="mt-5 pt-4 border-t border-emerald-700/60 flex items-center justify-between gap-3 relative z-10">
+              <span className="text-xs text-amber-300 font-medium">
+                QS. Al-Muzzammil 73:2 & 114 Surah
+              </span>
+              <Link
+                to="/tafsir?surah=73&ayah=2"
+                className="inline-flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 active:scale-95 text-emerald-950 font-bold px-4 py-2.5 rounded-xl text-xs shadow transition shrink-0"
+              >
+                <span>Buka Tafsir</span>
+                <ChevronRight size={16} />
+              </Link>
+            </div>
+
+            <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none translate-x-8 translate-y-8">
+              <BookOpen size={160} />
+            </div>
+          </motion.div>
         </div>
 
         {/* Kolom Kanan: Ayat Al-Qur'an & Hadits Pilihan (Berubah Otomatis Setiap Hari) */}

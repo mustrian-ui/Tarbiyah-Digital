@@ -11,6 +11,7 @@ import { PWAInstallButton } from "./PWAInstallButton";
 const menuItems = [
   { name: "Beranda", icon: Home, path: "/" },
   { name: "Mushaf Al-Qur'an", icon: Book, path: "/quran" },
+  { name: "Tafsir As-Sa'di", icon: BookOpen, path: "/tafsir" },
   { name: "Materi Khutbah Jum'at", icon: Scroll, path: "/khutbah" },
   { name: "Fikih", icon: Scale, path: "/fikih" },
   { name: "Konsultasi AI", icon: MessageSquare, path: "/ai" },

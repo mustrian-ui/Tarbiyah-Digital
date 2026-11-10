@@ -22,6 +22,7 @@ const Zakat = lazy(() => import("./pages/Zakat"));
 const Tracker = lazy(() => import("./pages/Tracker"));
 const Khutbah = lazy(() => import("./pages/Khutbah"));
 const Fikih = lazy(() => import("./pages/Fikih"));
+const Tafsir = lazy(() => import("./pages/Tafsir"));
 
 const Loading = () => (
   <div className="flex items-center justify-center h-screen bg-white">
@@ -41,6 +42,7 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/quran" element={<Quran />} />
+                  <Route path="/tafsir" element={<Tafsir />} />
                   <Route path="/ai" element={<AI />} />
                   <Route path="/doa" element={<Doa />} />
                   <Route path="/tauhid" element={<Tauhid />} />

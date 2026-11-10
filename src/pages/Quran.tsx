@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Search, Play, Pause, ChevronLeft, BookOpen, Bookmark, Check, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { cn } from "../lib/utils";
 import { getLastRead, saveLastRead, LastReadItem } from "../lib/lastRead";
 
@@ -355,20 +355,32 @@ export default function Quran() {
                         </button>
                       </div>
 
-                      {/* Bookmark button for this Ayah */}
-                      <button
-                        onClick={() => handleBookmark(a.nomorAyat)}
-                        className={cn(
-                          "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all",
-                          isSavedAyah
-                            ? "bg-amber-400 text-emerald-950 font-bold shadow-sm"
-                            : "text-gray-500 hover:text-emerald-800 hover:bg-emerald-50"
-                        )}
-                        title="Simpan sebagai bacaan terakhir"
-                      >
-                        <Bookmark size={14} className={isSavedAyah ? "fill-emerald-950" : ""} />
-                        <span>{isSavedAyah ? "Terakhir Dibaca" : "Tandai Bacaan"}</span>
-                      </button>
+                      {/* Action buttons: Tafsir As-Sa'di and Bookmark */}
+                      <div className="flex items-center gap-1.5">
+                        <Link
+                          to={`/tafsir?surah=${selectedSurah.nomor}&ayah=${a.nomorAyat}`}
+                          className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition"
+                          title="Buka Tafsir As-Sa'di untuk ayat ini"
+                        >
+                          <BookOpen size={13} />
+                          <span>Tafsir</span>
+                        </Link>
+
+                        {/* Bookmark button for this Ayah */}
+                        <button
+                          onClick={() => handleBookmark(a.nomorAyat)}
+                          className={cn(
+                            "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all",
+                            isSavedAyah
+                              ? "bg-amber-400 text-emerald-950 font-bold shadow-sm"
+                              : "text-gray-500 hover:text-emerald-800 hover:bg-emerald-50"
+                          )}
+                          title="Simpan sebagai bacaan terakhir"
+                        >
+                          <Bookmark size={14} className={isSavedAyah ? "fill-emerald-950" : ""} />
+                          <span>{isSavedAyah ? "Terakhir Dibaca" : "Tandai"}</span>
+                        </button>
+                      </div>
                     </div>
 
                     {/* Arabic Text */}

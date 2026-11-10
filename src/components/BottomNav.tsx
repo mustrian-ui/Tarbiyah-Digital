@@ -84,6 +84,7 @@ export const BottomNav: React.FC = () => {
   ];
 
   const secondaryMenuItems = [
+    { title: "Tafsir As-Sa'di", path: "/tafsir", icon: BookOpen },
     { title: "Khutbah Jum'at", path: "/khutbah", icon: Scroll },
     { title: "Fikih", path: "/fikih", icon: Scale },
     { title: "Konsultasi AI", path: "/ai", icon: MessageSquare },

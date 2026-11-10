@@ -135,6 +135,33 @@ app.get('/api/fikih', async (req, res) => {
   }
 });
 
+// Proxy endpoint for Qul Tarteel Tafsir As-Sa'di (Resource 503)
+app.get('/api/tafsir', async (req, res) => {
+  try {
+    const ayah = req.query.ayah || '73:2';
+    const targetUrl = new URL('https://qul.tarteel.ai/resources/translation/503/docs');
+    targetUrl.searchParams.set('ayah', String(ayah));
+
+    const response = await fetch(targetUrl.toString(), {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    });
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Failed to fetch from Qul Tarteel' });
+    }
+
+    const html = await response.text();
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (error) {
+    console.error('Tafsir API proxy error:', error);
+    res.status(500).json({ error: 'Internal server error while fetching tafsir data' });
+  }
+});
+
 // SPA fallback for client-side routing
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
