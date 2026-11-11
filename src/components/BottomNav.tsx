@@ -84,6 +84,7 @@ export const BottomNav: React.FC = () => {
   ];
 
   const secondaryMenuItems = [
+    { title: "Pustaka Ilmu", path: "/pustaka-ilmu", icon: Bookmark },
     { title: "Tafsir As-Sa'di", path: "/tafsir", icon: BookOpen },
     { title: "Khutbah Jum'at", path: "/khutbah", icon: Scroll },
     { title: "Fikih", path: "/fikih", icon: Scale },

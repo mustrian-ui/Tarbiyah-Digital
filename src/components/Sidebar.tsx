@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Book, MessageSquare, Heart, Shield, History, 
   Star, Clock, Microscope, ScrollText, BookOpen, 
-  TrendingUp, Calculator, CheckSquare, Menu, X, Scroll, Scale
+  TrendingUp, Calculator, CheckSquare, Menu, X, Scroll, Scale, BookMarked
 } from "lucide-react";
 import { cn } from "../lib/utils";
 import { PWAInstallButton } from "./PWAInstallButton";
@@ -11,6 +11,7 @@ import { PWAInstallButton } from "./PWAInstallButton";
 const menuItems = [
   { name: "Beranda", icon: Home, path: "/" },
   { name: "Mushaf Al-Qur'an", icon: Book, path: "/quran" },
+  { name: "Pustaka Ilmu", icon: BookMarked, path: "/pustaka-ilmu" },
   { name: "Tafsir As-Sa'di", icon: BookOpen, path: "/tafsir" },
   { name: "Materi Khutbah Jum'at", icon: Scroll, path: "/khutbah" },
   { name: "Fikih", icon: Scale, path: "/fikih" },

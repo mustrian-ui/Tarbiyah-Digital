@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { 
   Clock, Quote, BookOpen, Star, Scroll, ChevronRight, 
-  RotateCw, Sparkles, BookCheck, ArrowRight
+  RotateCw, Sparkles, ArrowRight
 } from "lucide-react";
 import { motion } from "motion/react";
 import { format } from "date-fns";
