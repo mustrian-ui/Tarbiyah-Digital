@@ -66,7 +66,7 @@ export default function App() {
             </Suspense>
           </div>
           <footer className="py-8 text-center text-gray-500 text-sm border-t border-emerald-100 bg-white/50">
-            <p>© 2026 Tarbiyah Digital. Dibuat Oleh : R14N</p>
+            <p>Tarakan @ 2026 - Dibuat oleh R14NTO</p>
           </footer>
         </main>
         <BottomNav />

@@ -418,7 +418,7 @@ export const BottomNav: React.FC = () => {
 
               {/* Footer info in sheet */}
               <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-                <span>Tarbiyah Digital © 2026</span>
+                <span>Tarakan @ 2026 - Dibuat oleh R14NTO</span>
                 <button
                   onClick={() => setShowLainnyaModal(false)}
                   className="font-semibold text-emerald-700 hover:text-emerald-800"
