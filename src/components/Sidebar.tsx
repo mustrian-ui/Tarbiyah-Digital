@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
-  Home, Book, MessageSquare, Heart, Shield, History, 
-  Star, Clock, Microscope, ScrollText, BookOpen, 
-  TrendingUp, Calculator, CheckSquare, Menu, X, Scroll, Scale, BookMarked
+  Home, Book, MessageSquare, Heart, 
+  ScrollText, BookOpen, 
+  TrendingUp, Calculator, CheckSquare, Menu, X, Scroll, Scale, BookMarked, Crown
 } from "lucide-react";
 import { cn } from "../lib/utils";
 import { PWAInstallButton } from "./PWAInstallButton";
@@ -12,18 +12,13 @@ const menuItems = [
   { name: "Beranda", icon: Home, path: "/" },
   { name: "Mushaf Al-Qur'an", icon: Book, path: "/quran" },
   { name: "Pustaka Ilmu", icon: BookMarked, path: "/pustaka-ilmu" },
+  { name: "Kisah 25 Nabi", icon: Crown, path: "/kisah-nabi" },
   { name: "Tafsir As-Sa'di", icon: BookOpen, path: "/tafsir" },
   { name: "Materi Khutbah Jum'at", icon: Scroll, path: "/khutbah" },
   { name: "Fikih", icon: Scale, path: "/fikih" },
   { name: "Konsultasi AI", icon: MessageSquare, path: "/ai" },
   { name: "Doa Harian", icon: Heart, path: "/doa" },
-  { name: "Tauhid", icon: Shield, path: "/tauhid" },
-  { name: "Sejarah", icon: History, path: "/sejarah" },
-  { name: "Peristiwa Agung", icon: Star, path: "/peristiwa" },
-  { name: "Timeline Manusia", icon: Clock, path: "/timeline" },
-  { name: "Ilmuwan Muslim", icon: Microscope, path: "/ilmuwan" },
   { name: "Hadits Arba'in", icon: ScrollText, path: "/hadits" },
-  { name: "Pedoman Ibadah", icon: BookOpen, path: "/pedoman" },
   { name: "Roadmap Diri", icon: TrendingUp, path: "/roadmap" },
   { name: "Kalkulator Zakat", icon: Calculator, path: "/zakat" },
   { name: "Ibadah Tracker", icon: CheckSquare, path: "/tracker" },

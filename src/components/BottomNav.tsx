@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
-  Home, BookOpen, Bookmark, Grid, Heart, History, 
-  ScrollText, Calculator, X, ChevronRight, Sparkles, 
-  Trash2, MessageSquare, BookCheck, Shield, CheckSquare, 
-  Clock, Microscope, TrendingUp, Star, Scroll, Scale
+  Home, BookOpen, Bookmark, Grid, Heart, 
+  ScrollText, Calculator, X, ChevronRight, 
+  Trash2, MessageSquare, CheckSquare, 
+  TrendingUp, Scroll, Scale
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
@@ -54,6 +54,20 @@ export const BottomNav: React.FC = () => {
 
   const primaryMenuItems = [
     {
+      title: "Pustaka Ilmu",
+      desc: "Katalog lengkap khazanah keilmuan Islam",
+      path: "/pustaka-ilmu",
+      icon: BookOpen,
+      color: "bg-emerald-50 text-emerald-800 border-emerald-100",
+    },
+    {
+      title: "Kisah 25 Nabi",
+      desc: "Kisah inspiratif & mukjizat 25 Nabi & Rasul",
+      path: "/kisah-nabi",
+      icon: Bookmark,
+      color: "bg-amber-50 text-amber-800 border-amber-100",
+    },
+    {
       title: "Doa Harian",
       desc: "Kumpulan doa mustajab sehari-hari",
       path: "/doa",
@@ -61,40 +75,21 @@ export const BottomNav: React.FC = () => {
       color: "bg-rose-50 text-rose-600 border-rose-100",
     },
     {
-      title: "Sejarah",
-      desc: "Artikel sejarah dakwah.id & peradaban Islam",
-      path: "/sejarah",
-      icon: History,
-      color: "bg-amber-50 text-amber-700 border-amber-100",
-    },
-    {
       title: "Hadits Arba'in",
       desc: "42 Hadits pilihan Imam An-Nawawi",
       path: "/hadits",
       icon: ScrollText,
-      color: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    },
-    {
-      title: "Kalkulator & Bayar Zakat",
-      desc: "Hitung zakat maal, fitrah & lembaga terpercaya",
-      path: "/zakat",
-      icon: Calculator,
-      color: "bg-blue-50 text-blue-700 border-blue-100",
+      color: "bg-teal-50 text-teal-700 border-teal-100",
     },
   ];
 
   const secondaryMenuItems = [
-    { title: "Pustaka Ilmu", path: "/pustaka-ilmu", icon: Bookmark },
     { title: "Tafsir As-Sa'di", path: "/tafsir", icon: BookOpen },
     { title: "Khutbah Jum'at", path: "/khutbah", icon: Scroll },
     { title: "Fikih", path: "/fikih", icon: Scale },
     { title: "Konsultasi AI", path: "/ai", icon: MessageSquare },
-    { title: "Pedoman Ibadah", path: "/pedoman", icon: BookCheck },
-    { title: "Peristiwa Agung", path: "/peristiwa", icon: Star },
-    { title: "Tauhid", path: "/tauhid", icon: Shield },
+    { title: "Zakat", path: "/zakat", icon: Calculator },
     { title: "Ibadah Tracker", path: "/tracker", icon: CheckSquare },
-    { title: "Ilmuwan Muslim", path: "/ilmuwan", icon: Microscope },
-    { title: "Timeline Manusia", path: "/timeline", icon: Clock },
     { title: "Roadmap Diri", path: "/roadmap", icon: TrendingUp },
   ];
 

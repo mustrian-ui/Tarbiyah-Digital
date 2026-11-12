@@ -24,6 +24,7 @@ const Khutbah = lazy(() => import("./pages/Khutbah"));
 const Fikih = lazy(() => import("./pages/Fikih"));
 const Tafsir = lazy(() => import("./pages/Tafsir"));
 const PustakaIlmu = lazy(() => import("./pages/PustakaIlmu"));
+const KisahNabi = lazy(() => import("./pages/KisahNabi"));
 
 const Loading = () => (
   <div className="flex items-center justify-center h-screen bg-white">
@@ -59,6 +60,7 @@ export default function App() {
                   <Route path="/khutbah" element={<Khutbah />} />
                   <Route path="/fikih" element={<Fikih />} />
                   <Route path="/pustaka-ilmu" element={<PustakaIlmu />} />
+                  <Route path="/kisah-nabi" element={<KisahNabi />} />
                 </Routes>
               </div>
             </Suspense>

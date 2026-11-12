@@ -161,7 +161,7 @@ export const PUSTAKA_TOPICS: PustakaTopic[] = [
     categoryId: "sirah_kisah",
     subtitle: "Kisah inspiratif 25 Nabi dan Rasul yang wajib diimani.",
     icon: "Crown",
-    modalId: "kisah-25-nabi",
+    route: "/kisah-nabi",
     gradient: "from-emerald-800 to-teal-950",
     textColor: "text-emerald-800",
     badge: "25 Nabi & Rasul"

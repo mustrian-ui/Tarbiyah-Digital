@@ -17,128 +17,8 @@ import {
   fetchSejarahArticleBySlug
 } from "../services/sejarahService";
 import { SejarahArticleItem, SejarahSubmenu } from "../types/sejarah";
-
-// Existing "Sejarah Islam" historical eras dataset
-const peradabanSections = [
-  {
-    id: "quran",
-    title: "Sejarah Turunnya Al-Qur'an",
-    icon: BookOpen,
-    era: "Masa Kenabian (610–632 M)",
-    content: "Al-Qur'an diturunkan secara berangsur-angsur selama kurang lebih 23 tahun kepada Nabi Muhammad SAW melalui perantara Malaikat Jibril. Dimulai di Gua Hira dengan wahyu pertama Surat Al-Alaq ayat 1-5.",
-    fullContent: `
-      <h3>Mengenal Sejarah Al-Qur’an</h3>
-      <p>Al-Qur'an adalah kitab suci umat Islam yang merupakan kalam Allah SWT yang diturunkan kepada Nabi Muhammad SAW melalui perantara Malaikat Jibril. Proses turunnya Al-Qur'an terjadi secara berangsur-angsur selama kurang lebih 23 tahun (13 tahun di Makkah dan 10 tahun di Madinah).</p>
-      
-      <h4>Periode Turunnya Al-Qur'an</h4>
-      <p><strong>1. Periode Makkah (Makkiyah):</strong> Dimulai pada malam 17 Ramadhan (Nuzulul Qur'an) saat Nabi Muhammad SAW sedang bertahannuts di Gua Hira. Wahyu pertama yang turun adalah Surat Al-Alaq ayat 1-5. Ayat-ayat yang turun di periode ini umumnya pendek, menekankan pada penguatan tauhid, akidah, akhlak, dan berita tentang hari kiamat.</p>
-      <p><strong>2. Periode Madinah (Madaniyah):</strong> Terjadi setelah Nabi Muhammad SAW hijrah ke Madinah. Ayat-ayat periode ini umumnya lebih panjang dan mengatur tentang hukum-hukum Islam (syariat), kemasyarakatan, politik, peperangan, dan hubungan antarumat beragama.</p>
-      
-      <h4>Sejarah Pembukuan Al-Qur'an</h4>
-      <p><strong>Masa Rasulullah SAW:</strong> Al-Qur'an dicatat oleh para sahabat di pelepah kurma, batu, kulit binatang, dan tulang-belulang, serta dihafal oleh banyak sahabat.</p>
-      <p><strong>Masa Khalifah Abu Bakar:</strong> Setelah banyak penghafal Al-Qur'an gugur dalam Perang Yamamah, Umar bin Khattab mengusulkan pengumpulan Al-Qur'an. Abu Bakar menunjuk Zaid bin Tsabit untuk memimpin pengumpulan naskah-naskah tersebut menjadi satu mushaf.</p>
-      <p><strong>Masa Khalifah Utsman bin Affan:</strong> Karena meluasnya wilayah Islam dan munculnya perbedaan dialek bacaan, Utsman bin Affan memerintahkan penyalinan mushaf standar yang dikenal sebagai Mushaf Utsmani. Mushaf ini kemudian dikirim ke berbagai wilayah Islam dan menjadi standar tunggal hingga saat ini.</p>
-    `
-  },
-  {
-    id: "khulafaur",
-    title: "Sejarah Khulafaur Rasyidin",
-    icon: Landmark,
-    era: "Era Sahabat Utama (632–661 M)",
-    content: "Masa kepemimpinan empat sahabat Nabi: Abu Bakar Ash-Shiddiq, Umar bin Khattab, Utsman bin Affan, dan Ali bin Abi Thalib. Masa ini merupakan zaman keemasan Islam dalam hal keadilan dan perluasan dakwah.",
-    fullContent: `
-      <h3>Mengenal Khulafaur Rasyidin</h3>
-      <p>Khulafaur Rasyidin berarti "pemimpin yang mendapat petunjuk". Mereka adalah empat sahabat utama Nabi Muhammad SAW yang memimpin umat Islam setelah wafatnya Rasulullah.</p>
-      
-      <h4>1. Abu Bakar Ash-Shiddiq (632–634 M)</h4>
-      <p>Beliau adalah khalifah pertama. Fokus utamanya adalah menjaga stabilitas umat Islam yang baru saja ditinggal wafat Nabi. Beliau berhasil memadamkan pemberontakan kaum murtad dan nabi palsu dalam Perang Riddah, serta memulai proses pengumpulan Al-Qur'an.</p>
-      
-      <h4>2. Umar bin Khattab (634–644 M)</h4>
-      <p>Dikenal sebagai Al-Faruq (pembeda antara yang benar dan salah). Di bawah kepemimpinannya, wilayah Islam meluas hingga ke Persia, Syam, dan Mesir. Beliau membentuk administrasi negara yang modern, menetapkan kalender Hijriah, dan mendirikan lembaga-lembaga pemerintahan (Diwan).</p>
-      
-      <h4>3. Utsman bin Affan (644–656 M)</h4>
-      <p>Dikenal sebagai Dzun Nurain (pemilik dua cahaya). Beliau melanjutkan perluasan wilayah dan memberikan kontribusi besar dalam pembukuan Al-Qur'an menjadi satu mushaf standar (Mushaf Utsmani). Beliau juga membangun armada laut Islam yang pertama.</p>
-      
-      <h4>4. Ali bin Abi Thalib (656–661 M)</h4>
-      <p>Sepupu sekaligus menantu Nabi. Masa kepemimpinannya diwarnai dengan tantangan internal yang besar. Meskipun terjadi berbagai ujian politik, Ali tetap dikenal sebagai pemimpin yang sangat cerdas, adil, berilmu luas, dan teguh dalam memegang prinsip syariat.</p>
-    `
-  },
-  {
-    id: "umayyah",
-    title: "Sejarah Dinasti Umayyah",
-    icon: Map,
-    era: "Damaskus & Andalusia (661–750 M)",
-    content: "Dinasti pertama setelah masa Khulafaur Rasyidin, berpusat di Damaskus. Berperan besar dalam perluasan wilayah Islam hingga ke Spanyol (Andalusia) dan Asia Tengah.",
-    fullContent: `
-      <h3>Sejarah Bani Umayyah</h3>
-      <p>Bani Umayyah adalah kekhalifahan Islam pertama setelah berakhirnya masa Khulafaur Rasyidin. Didirikan oleh Muawiyah bin Abu Sufyan pada tahun 661 M setelah peristiwa Amul Jama'ah (Tahun Persatuan).</p>
-      
-      <h4>Sistem Pemerintahan</h4>
-      <p>Dinasti Umayyah mengubah sistem kepemimpinan menjadi sistem monarki turun-temurun. Pusat pemerintahan dipindahkan dari Madinah ke Damaskus, Suriah.</p>
-      
-      <h4>Masa Kejayaan</h4>
-      <p>Masa kejayaan dicapai pada masa Khalifah Al-Walid bin Abdul Malik dan Umar bin Abdul Aziz. Wilayah Islam meluas hingga ke India di timur dan Andalusia (Spanyol) di barat. Perkembangan terjadi di berbagai bidang:</p>
-      <ul>
-        <li><strong>Arsitektur:</strong> Pembangunan Masjid Agung Damaskus dan Kubah Shakhrah (Dome of the Rock).</li>
-        <li><strong>Administrasi:</strong> Penggunaan bahasa Arab sebagai bahasa resmi administrasi dan pencetakan mata uang dinar/dirham Islam.</li>
-        <li><strong>Ilmu Pengetahuan:</strong> Dimulainya penerjemahan karya-karya ilmiah dan perkembangan ilmu hadits serta fiqih.</li>
-      </ul>
-      
-      <h4>Keruntuhan</h4>
-      <p>Dinasti ini berakhir di Damaskus pada tahun 750 M, namun salah satu keturunannya, Abdurrahman Ad-Dakhil, berhasil mendirikan kembali kekhalifahan Umayyah di Andalusia (Spanyol) yang bertahan selama beberapa abad berikutnya.</p>
-    `
-  },
-  {
-    id: "abbasiyah",
-    title: "Sejarah Dinasti Abbasiyah",
-    icon: Landmark,
-    era: "Zaman Keemasan Baghdad (750–1258 M)",
-    content: "Masa keemasan ilmu pengetahuan Islam (Golden Age of Islam). Berpusat di Baghdad, melahirkan banyak ilmuwan besar seperti Al-Khwarizmi dan Ibnu Sina.",
-    fullContent: `
-      <h3>Sejarah Dinasti Abbasiyah</h3>
-      <p>Dinasti Abbasiyah didirikan oleh Abu al-Abbas as-Saffah pada tahun 750 M. Dinasti ini berkuasa selama lebih dari lima abad dengan pusat peradaban megah di Baghdad, Irak.</p>
-      
-      <h4>Zaman Keemasan Islam (The Golden Age)</h4>
-      <p>Puncak kejayaan terjadi pada masa Khalifah Harun al-Rasyid dan putranya, Al-Ma'mun. Baghdad menjadi pusat ilmu dunia. Salah satu warisan terbesarnya adalah <strong>Bayt al-Hikmah</strong> (Rumah Kebijaksanaan), sebuah perpustakaan, akademi penerjemahan, dan pusat riset sains raksasa.</p>
-      
-      <h4>Kontribusi Ilmu Pengetahuan</h4>
-      <p>Ilmu pengetahuan berkembang pesat di berbagai cabang:</p>
-      <ul>
-        <li><strong>Al-Khwarizmi:</strong> Penemu Aljabar dan konsep algoritma modern.</li>
-        <li><strong>Ibnu Sina (Avicenna):</strong> Pengarang Al-Qanun fi at-Tibb, rujukan kedokteran dunia.</li>
-        <li><strong>Al-Biruni:</strong> Bapak geodesi dan astronomi komparatif.</li>
-        <li><strong>Jabir bin Hayyan:</strong> Perintis ilmu kimia eksperimental.</li>
-      </ul>
-      
-      <h4>Keruntuhan</h4>
-      <p>Kemunduran terjadi akibat perpecahan internal dan mencapai titik akhir saat bangsa Mongol di bawah Hulagu Khan menyerbu dan menghancurkan Baghdad pada tahun 1258 M.</p>
-    `
-  },
-  {
-    id: "indonesia",
-    title: "Sejarah Islam di Indonesia",
-    icon: Map,
-    era: "Nusantara (Abad ke-7 – Sekarang)",
-    content: "Islam masuk ke Nusantara melalui jalur perdagangan dan dakwah damai oleh para pedagang Arab, Gujarat, dan Persia. Peran Wali Songo sangat krusial dalam penyebaran Islam di tanah Jawa.",
-    fullContent: `
-      <h3>Sejarah Islam di Indonesia</h3>
-      <p>Islam masuk ke wilayah Nusantara melalui proses yang damai, berkeadaban, dan bertahap, menjadikannya agama mayoritas dengan corak budaya yang toleran dan santun.</p>
-      
-      <h4>Teori Masuknya Islam</h4>
-      <ul>
-        <li><strong>Teori Makkah:</strong> Islam masuk langsung dari tanah Arab pada abad ke-7 (masa awal sahabat Nabi).</li>
-        <li><strong>Teori Gujarat:</strong> Islam dibawa oleh pedagang dari Gujarat, India pada abad ke-13.</li>
-        <li><strong>Teori Persia:</strong> Pengaruh budaya Persia pada masa-masa awal kerajaan Islam di pesisir Sumatera.</li>
-      </ul>
-      
-      <h4>Peran Wali Songo</h4>
-      <p>Di Pulau Jawa, dakwah Islam dipelopori oleh Wali Songo dengan pendekatan kultural yang bijak, menyelaraskan ajaran tauhid dengan budaya masyarakat lokal tanpa merusak akidah.</p>
-      
-      <h4>Kerajaan-Kerajaan Islam Nusantara</h4>
-      <p>Penyebaran Islam semakin kuat dengan berdirinya kesultanan-kesultanan bersejarah seperti Samudera Pasai, Kesultanan Demak, Mataram Islam, Kesultanan Banten, Gowa-Tallo, serta Ternate dan Tidore.</p>
-    `
-  }
-];
+import { SEJARAH_ISLAM_COMPLETE_DATA, SejarahTopic } from "../data/sejarahCompleteData";
+import { Crown, Compass } from "lucide-react";
 
 export default function Sejarah() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -340,7 +220,19 @@ export default function Sejarah() {
     });
   }, [articles, showOnlyBookmarks, bookmarkedIds]);
 
-  const activePeradabanSection = peradabanSections.find(s => s.id === showFullPeradaban);
+  const [peradabanSearchQuery, setPeradabanSearchQuery] = useState<string>("");
+
+  const filteredPeradabanTopics = useMemo(() => {
+    const q = peradabanSearchQuery.toLowerCase().trim();
+    if (!q) return SEJARAH_ISLAM_COMPLETE_DATA;
+    return SEJARAH_ISLAM_COMPLETE_DATA.filter(t => 
+      t.title.toLowerCase().includes(q) ||
+      t.subtitle.toLowerCase().includes(q) ||
+      t.content.some(c => (c.title && c.title.toLowerCase().includes(q)) || c.text.toLowerCase().includes(q))
+    );
+  }, [peradabanSearchQuery]);
+
+  const activePeradabanSection = SEJARAH_ISLAM_COMPLETE_DATA.find(s => s.id === showFullPeradaban);
 
   return (
     <div className="space-y-6 w-full max-w-full min-w-0 overflow-x-hidden">
@@ -736,127 +628,297 @@ export default function Sejarah() {
         </div>
       )}
 
-      {/* 3. SUBMENU 2: Sejarah Islam (Modul Peradaban Klasik Sebelumnya) */}
+      {/* 3. SUBMENU 2: Sejarah Islam (13 Topik Lengkap - In-Page Reader, Tidak Mengambang/Melayang) */}
       {currentTab === "peradaban" && (
         <div className="space-y-6">
-          <div className="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-700 text-amber-300 shrink-0">
-              <Landmark size={22} />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-emerald-950">Submenu: Sejarah Islam (Era Peradaban)</h3>
-              <p className="text-xs text-emerald-800">
-                Dokumentasi terstruktur perkembangan Islam dari masa turunnya wahyu, kepemimpinan Khulafaur Rasyidin, Dinasti Islam, hingga penyebaran di Nusantara.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4">
-            {peradabanSections.map((section) => (
-              <motion.div
-                key={section.id}
-                layout
-                className={cn(
-                  "bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden transition-all",
-                  activePeradabanId === section.id ? "ring-2 ring-emerald-500 shadow-md" : "hover:bg-emerald-50/30"
-                )}
-              >
+          {showFullPeradaban && activePeradabanSection ? (
+            /* In-Page Reader View (Directly in-page, no floating modal) */
+            <div className="space-y-6 w-full max-w-full min-w-0">
+              {/* In-Page Sticky Control Bar */}
+              <div className="sticky top-16 lg:top-4 z-30 bg-white/95 backdrop-blur-md border border-emerald-100 rounded-2xl p-2.5 sm:p-3 shadow-md flex items-center justify-between gap-2 no-print w-full max-w-full min-w-0">
                 <button
-                  onClick={() => setActivePeradabanId(activePeradabanId === section.id ? null : section.id)}
-                  className="w-full p-5 md:p-6 flex items-center justify-between text-left"
+                  onClick={() => {
+                    setShowFullPeradaban(null);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-emerald-100 text-emerald-800 rounded-2xl shrink-0">
-                      <section.icon size={22} />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-bold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/60 inline-block mb-1">
-                        {section.era}
-                      </span>
-                      <h3 className="text-lg md:text-xl font-bold text-emerald-950 leading-snug">
-                        {section.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <ChevronRight 
-                    className={cn("text-emerald-400 transition-transform", activePeradabanId === section.id && "rotate-90")} 
-                  />
+                  <ArrowLeft size={16} />
+                  <span>Daftar 13 Topik Sejarah</span>
                 </button>
 
-                <AnimatePresence>
-                  {activePeradabanId === section.id && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="px-6 pb-6"
+                {/* Font Size & Actions */}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl text-xs">
+                    <button
+                      onClick={() => setFontSize("normal")}
+                      className={cn(
+                        "px-2.5 py-1 rounded-lg font-bold transition",
+                        fontSize === "normal" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+                      )}
+                      title="Ukuran Normal"
                     >
-                      <div className="pt-4 border-t border-emerald-50">
-                        <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                          {section.content}
+                      A
+                    </button>
+                    <button
+                      onClick={() => setFontSize("large")}
+                      className={cn(
+                        "px-2.5 py-1 rounded-lg font-bold transition",
+                        fontSize === "large" ? "bg-white text-emerald-800 shadow-xs" : "text-gray-600 hover:text-gray-900"
+                      )}
+                      title="Ukuran Besar"
+                    >
+                      A+
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      const raw = `${activePeradabanSection.title}\n\n${activePeradabanSection.subtitle}\n\n${activePeradabanSection.content.map(c => `${c.title ? c.title + '\n' : ''}${c.text || ''}`).join('\n\n')}`;
+                      navigator.clipboard.writeText(raw);
+                      setCopyToast(true);
+                      setTimeout(() => setCopyToast(false), 2500);
+                    }}
+                    className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
+                    title="Salin Materi"
+                  >
+                    <Copy size={18} />
+                  </button>
+
+                  <button
+                    onClick={() => window.print()}
+                    className="p-2 rounded-xl bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200 transition"
+                    title="Cetak Materi"
+                  >
+                    <Printer size={18} />
+                  </button>
+                </div>
+              </div>
+
+              {/* In-Page Article Card */}
+              <article className="bg-white rounded-3xl border border-emerald-100 shadow-lg p-5 sm:p-8 md:p-12 overflow-hidden w-full max-w-full min-w-0">
+                <header className="border-b border-emerald-100 pb-6 mb-8 text-center max-w-2xl mx-auto w-full min-w-0">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100 text-xs font-semibold mb-3">
+                    <History size={14} />
+                    <span>Submenu: Sejarah Islam (Era Peradaban)</span>
+                  </div>
+
+                  <h1 className={cn(
+                    "font-extrabold text-emerald-950 leading-tight break-words min-w-0",
+                    fontSize === "normal" ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl"
+                  )}>
+                    {activePeradabanSection.title}
+                  </h1>
+
+                  <p className="text-emerald-700 font-medium text-sm md:text-base mt-2">
+                    {activePeradabanSection.subtitle}
+                  </p>
+                </header>
+
+                {/* Dalil if available */}
+                {activePeradabanSection.dalil && (
+                  <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50/40 border border-emerald-200">
+                    <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">
+                      Dalil Terkait:
+                    </p>
+                    <p className="text-sm sm:text-base italic text-emerald-950 font-serif">
+                      "{activePeradabanSection.dalil.text}"
+                    </p>
+                    <p className="text-xs font-bold text-amber-700 mt-1 text-right">
+                      — {activePeradabanSection.dalil.source}
+                    </p>
+                  </div>
+                )}
+
+                {/* Narrative content sections */}
+                <div className={cn(
+                  "space-y-6 text-gray-800 leading-relaxed",
+                  fontSize === "normal" ? "text-base sm:text-lg" : "text-lg sm:text-xl leading-loose"
+                )}>
+                  {activePeradabanSection.content.map((item, pIdx) => (
+                    <div key={pIdx} className="p-4 sm:p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                      {item.title && (
+                        <h4 className="font-bold text-lg sm:text-xl text-emerald-950 mb-3 flex items-center gap-2">
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0" />
+                          <span>{item.title}</span>
+                        </h4>
+                      )}
+                      {item.text && (
+                        <p className="text-gray-700 leading-relaxed text-justify">
+                          {item.text}
                         </p>
-                        <button 
-                          onClick={() => setShowFullPeradaban(section.id)}
-                          className="mt-4 inline-flex items-center gap-1.5 text-emerald-700 hover:text-emerald-900 font-bold text-sm bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-xl transition"
+                      )}
+                      {item.items && item.items.length > 0 && (
+                        <div className="space-y-3 mt-4">
+                          {item.items.map((it, itIdx) => {
+                            if (typeof it === "string") {
+                              return (
+                                <div key={itIdx} className="text-sm sm:text-base text-gray-700 flex items-start gap-2.5 leading-relaxed">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0" />
+                                  <span>{it}</span>
+                                </div>
+                              );
+                            }
+                            return (
+                              <div key={itIdx} className="p-4 bg-white rounded-xl border border-gray-200/80 shadow-2xs">
+                                {it.title && (
+                                  <p className="font-bold text-sm sm:text-base text-emerald-950 mb-2 flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
+                                    <span>{it.title}</span>
+                                  </p>
+                                )}
+                                {it.points && it.points.length > 0 && (
+                                  <ul className="space-y-2 pl-2">
+                                    {it.points.map((pt, ptIdx) => (
+                                      <li key={ptIdx} className="text-xs sm:text-sm text-gray-700 leading-relaxed flex items-start gap-2">
+                                        <span className="text-emerald-600 font-bold">•</span>
+                                        <span>{pt}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom prev/next and back navigation */}
+                <footer className="mt-12 pt-6 border-t border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  {(() => {
+                    const curIdx = SEJARAH_ISLAM_COMPLETE_DATA.findIndex(s => s.id === activePeradabanSection.id);
+                    return (
+                      <>
+                        <button
+                          onClick={() => {
+                            if (curIdx > 0) {
+                              setShowFullPeradaban(SEJARAH_ISLAM_COMPLETE_DATA[curIdx - 1].id);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                          }}
+                          disabled={curIdx <= 0}
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl border border-emerald-200 bg-white hover:bg-emerald-50 text-emerald-900 font-bold text-xs sm:text-sm disabled:opacity-40 disabled:pointer-events-none transition shadow-xs"
                         >
-                          <span>Baca Materi Lengkap</span>
+                          <ArrowLeft size={16} />
+                          <span>Topik Sebelumnya ({curIdx > 0 ? SEJARAH_ISLAM_COMPLETE_DATA[curIdx - 1].title : ""})</span>
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setShowFullPeradaban(null);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className="text-xs font-bold text-emerald-700 hover:text-emerald-900 px-4 py-2"
+                        >
+                          Kembali ke Daftar 13 Topik
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            if (curIdx < SEJARAH_ISLAM_COMPLETE_DATA.length - 1) {
+                              setShowFullPeradaban(SEJARAH_ISLAM_COMPLETE_DATA[curIdx + 1].id);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                          }}
+                          disabled={curIdx >= SEJARAH_ISLAM_COMPLETE_DATA.length - 1}
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm disabled:opacity-40 disabled:pointer-events-none transition shadow-sm"
+                        >
+                          <span>Topik Selanjutnya ({curIdx < SEJARAH_ISLAM_COMPLETE_DATA.length - 1 ? SEJARAH_ISLAM_COMPLETE_DATA[curIdx + 1].title : ""})</span>
                           <ChevronRight size={16} />
                         </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
+                      </>
+                    );
+                  })()}
+                </footer>
+              </article>
+            </div>
+          ) : (
+            /* List of 13 Sejarah Topics (When no topic is opened) */
+            <div className="space-y-6">
+              <div className="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-emerald-700 text-amber-300 shrink-0">
+                    <Landmark size={22} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm text-emerald-950">Submenu: Sejarah Islam (13 Khazanah Peradaban)</h3>
+                    <p className="text-xs text-emerald-800">
+                      Dokumentasi komprehensif perkembangan peradaban Islam dari masa wahyu, Khulafaur Rasyidin, Dinasti Islam, Penaklukan Konstantinopel, hingga Nusantara.
+                    </p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-emerald-800 bg-white px-3 py-1 rounded-full border border-emerald-200 shrink-0">
+                  {filteredPeradabanTopics.length} Topik
+                </span>
+              </div>
 
-          {/* Full Content Modal for Peradaban Module */}
-          <AnimatePresence>
-            {showFullPeradaban && activePeradabanSection && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/70 backdrop-blur-sm">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                  className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-emerald-100"
-                >
-                  <div className="p-6 border-b border-emerald-100 flex justify-between items-center bg-emerald-50/50">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 bg-emerald-700 text-amber-300 rounded-xl">
-                        <activePeradabanSection.icon size={20} />
+              {/* Search Box for Submenu Sejarah */}
+              <div className="bg-white rounded-2xl border border-emerald-100 p-3 shadow-xs flex items-center gap-2">
+                <Search size={18} className="text-gray-400 ml-2 shrink-0" />
+                <input
+                  type="text"
+                  value={peradabanSearchQuery}
+                  onChange={(e) => setPeradabanSearchQuery(e.target.value)}
+                  placeholder="Cari topik sejarah (Al-Qur'an, Abbasiyah, Konstantinopel, Andalusia, Utsmaniyah)..."
+                  className="w-full text-xs sm:text-sm text-gray-800 placeholder-gray-400 focus:outline-none bg-transparent"
+                />
+                {peradabanSearchQuery && (
+                  <button
+                    onClick={() => setPeradabanSearchQuery("")}
+                    className="text-gray-400 hover:text-gray-600 p-1"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
+
+              {/* Grid of 13 Sejarah Topics */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredPeradabanTopics.map((topic, idx) => (
+                  <div
+                    key={topic.id}
+                    onClick={() => {
+                      setShowFullPeradaban(topic.id);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="bg-white rounded-2xl border border-emerald-100 p-5 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:border-emerald-300 relative overflow-hidden"
+                  >
+                    <div className="w-full min-w-0">
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="p-2.5 rounded-xl bg-emerald-100 text-emerald-800 group-hover:bg-emerald-700 group-hover:text-amber-300 transition-colors shrink-0">
+                          <History size={20} />
+                        </div>
+                        <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+                          Topik #{idx + 1}
+                        </span>
                       </div>
-                      <div>
-                        <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">Submenu: Sejarah Islam</span>
-                        <h3 className="text-xl md:text-2xl font-bold text-emerald-950">{activePeradabanSection.title}</h3>
+
+                      <h3 className="font-bold text-base md:text-lg text-emerald-950 group-hover:text-emerald-700 leading-snug transition-colors">
+                        {topic.title}
+                      </h3>
+
+                      <p className="text-xs text-gray-600 mt-2 line-clamp-2 leading-relaxed">
+                        {topic.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                      <span className="text-[11px] text-emerald-700 font-medium">
+                        {topic.content.length} Bagian Pembahasan
+                      </span>
+                      <div className="flex items-center gap-1 font-bold text-emerald-700 group-hover:text-emerald-900 group-hover:translate-x-0.5 transition-all">
+                        <span>Baca Materi Lengkap</span>
+                        <ChevronRight size={15} />
                       </div>
                     </div>
-                    <button 
-                      onClick={() => setShowFullPeradaban(null)}
-                      className="p-2 hover:bg-emerald-100 rounded-full transition-colors text-emerald-700"
-                    >
-                      <X size={22} />
-                    </button>
                   </div>
-                  
-                  <div className="p-6 md:p-8 overflow-y-auto flex-1 khutbah-content prose prose-emerald max-w-none text-slate-800">
-                    <div 
-                      className="space-y-4 text-sm md:text-base leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: activePeradabanSection.fullContent }}
-                    />
-                  </div>
-                  
-                  <div className="p-4 border-t border-emerald-100 bg-gray-50 flex justify-end">
-                    <button 
-                      onClick={() => setShowFullPeradaban(null)}
-                      className="px-6 py-2.5 bg-emerald-700 text-white rounded-xl font-bold hover:bg-emerald-800 transition-colors text-sm shadow-sm"
-                    >
-                      Tutup
-                    </button>
-                  </div>
-                </motion.div>
+                ))}
               </div>
-            )}
-          </AnimatePresence>
+            </div>
+          )}
         </div>
       )}
     </div>
