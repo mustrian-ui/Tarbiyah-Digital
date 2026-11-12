@@ -190,7 +190,7 @@ export const DOA_HARIAN_COMPLETE: DoaItem[] = [
   {
     "id": "doa-15",
     "title": "Doa Memakai Pakaian",
-    "arabic": "الْحَمْدُ لِلَّهِ الَّذِي كَسَانِ�� هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+    "arabic": "الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
     "latin": "Alhamdulillahilladzi kasaani hadzaa wa rozaqoniihi min ghoiri hawlin minni wa laa quwwatin.",
     "translation": "Segala puji bagi Allah yang telah memberiku pakaian ini dan menganugerahkannya kepadaku tanpa daya dan kekuatan dariku.",
     "source": "HR. Abu Dawud",
@@ -316,7 +316,7 @@ export const DOA_HARIAN_COMPLETE: DoaItem[] = [
   {
     "id": "doa-29",
     "title": "Doa Dimudahkan Urusan",
-    "arabic": "رَبِّ اشْرَحْ لِي صَدْرِي�� وَيَسِّرْ لِي أَمْرِي، وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي، يَفْقَهُوا قَوْلِي",
+    "arabic": "رَبِّ اشْرَحْ لِي صَدْرِي، وَيَسِّرْ لِي أَمْرِي، وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي، يَفْقَهُوا قَوْلِي",
     "latin": "Rabbisyrah lii shodrii, wa yassir lii amrii, wahlul 'uqdatam mil lisaanii, yafqohuu qoulii.",
     "translation": "Ya Tuhanku, lapangkanlah dadaku, mudahkanlah untukku urusanku, dan lepaskanlah kekakuan dari lidahku, agar mereka mengerti perkataanku.",
     "source": "QS. Taha: 25-28",
@@ -424,7 +424,7 @@ export const DOA_HARIAN_COMPLETE: DoaItem[] = [
   {
     "id": "doa-41",
     "title": "Doa Naik Kendaraan",
-    "arabic": "س��بْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+    "arabic": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
     "latin": "Subhanalladzi sakhkhara lana hadza wa ma kunna lahu muqrinin, wa inna ila rabbina lamunqalibun.",
     "translation": "Maha Suci Tuhan yang telah menundukkan semua ini bagi kami padahal kami sebelumnya tidak mampu menguasainya, dan sesungguhnya kami akan kembali kepada Tuhan kami.",
     "source": "QS. Az-Zukhruf: 13-14",
