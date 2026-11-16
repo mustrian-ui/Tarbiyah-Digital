@@ -206,15 +206,15 @@ export const PUSTAKA_TOPICS: PustakaTopic[] = [
   },
   {
     id: "tokoh-muslim",
-    title: "Tokoh Muslim Berpengaruh",
+    title: "Ilmuwan Muslim Terkemuka",
     category: "Sejarah & Peradaban",
     categoryId: "sejarah_peradaban",
-    subtitle: "Biografi singkat tokoh-tokoh Muslim yang berpengaruh.",
+    subtitle: "Biografi lengkap, penemuan ilmiah, dan karya monumental ilmuwan Muslim bagi peradaban dunia.",
     icon: "Microscope",
     route: "/ilmuwan",
     gradient: "from-teal-600 to-cyan-800",
     textColor: "text-teal-700",
-    badge: "Ilmuwan & Ulama"
+    badge: "18 Tokoh Lengkap"
   },
 
   // 5. Studi Khusus Al-Qur'an
